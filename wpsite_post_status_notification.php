@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: WPSite Post Status Notification
+Plugin Name: WPSite Post Status Notification Beta
 plugin URI: wpsite-post-status-notification
 Description:
 version: 1.0
