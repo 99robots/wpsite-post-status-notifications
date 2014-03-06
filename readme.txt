@@ -1,4 +1,4 @@
-=== Wpsite Post Status Notification ===
+=== WPsite Post Status Notifications ===
 Contributors:
 Donate link: 
 Tags:
@@ -16,9 +16,8 @@ This is the long description.  No limit, and you can use Markdown (as well as in
 
 == Installation ==
 
-1. Upload `wpsite-post-status-notification` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Go to plugins page to see instructions for shortcode and php template tags
+1. Upload `post-status-notifications` to the `/wp-content/plugins/` directory
+2. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Frequently Asked Questions ==
 
