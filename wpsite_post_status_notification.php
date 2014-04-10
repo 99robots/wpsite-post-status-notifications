@@ -44,8 +44,12 @@ register_activation_hook( __FILE__, array('WPSitePostStatusNotification', 'regis
  * Hooks / Filter 
  */
  
-add_action( 'transition_post_status', array('WPSitePostStatusNotification', 'wpsite_send_email'), 10, 3 );
+add_action('transition_post_status', array('WPSitePostStatusNotification', 'wpsite_send_email'), 10, 3 );
 add_action('init', array('WPSitePostStatusNotification', 'load_textdoamin'));
+add_action('admin_menu', array('WPSitePostStatusNotification', 'wpsite_admin_menu_info'));
+
+$plugin = plugin_basename(__FILE__); 
+add_filter("plugin_action_links_$plugin", array('WPSitePostStatusNotification', 'wpsite_post_status_notification_settings_link'));
 
 /** 
  *  WPSitePostStatusNotification main class
@@ -63,6 +67,8 @@ class WPSitePostStatusNotification {
 	private static $jquery_latest = 'http://code.jquery.com/jquery-latest.min.js';
 	
 	private static $text_domain = 'wpsite-post-status-notification';
+	
+	private static $info_page = 'wpsite-post-status-notification-admin-info';
 
 	/**
 	 * Load the text domain 
@@ -87,6 +93,52 @@ class WPSitePostStatusNotification {
 		} else {
 			add_option(self::$version_setting_name, WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM);
 		}
+	}
+	
+	/**
+	 * Hooks to 'plugin_action_links_' filter 
+	 * 
+	 * @since 1.0.0
+	 */
+	static function wpsite_post_status_notification_settings_link($links) { 
+		$settings_link = '<a href="tools.php?page=' . self::$info_page . '">Info</a>'; 
+		array_unshift($links, $settings_link); 
+		return $links; 
+	}
+	
+	/**
+	 * Hooks to 'admin_menu' 
+	 * 
+	 * @since 1.0.0
+	 */
+	static function wpsite_admin_menu_info() {
+	
+		 /* Cast the first sub menu to the settings menu */
+	    
+	    $page_hook_suffix = add_submenu_page(
+	    	'tools.php', 												// parent slug
+	    	__('WPsite Post SN', self::$text_domain), 						// Page title
+	    	__('WPsite Post SN', self::$text_domain), 						// Menu name
+	    	'manage_options', 											// Capabilities
+	    	self::$info_page, 										// slug
+	    	array('WPSitePostStatusNotification', 'wpsite_admin_menu_info_callback')	// Callback function
+	    );
+	}
+	
+	/**
+	 * Callback to info page 
+	 * 
+	 * @since 1.0.0
+	 */
+	static function wpsite_admin_menu_info_callback() {
+		?>
+		<h1><?php _e('WPsite Post Status Notification', self::$text_domain); ?></h1>
+		<p><?php _e('This plugin consists of two main features:', self::$text_domain); ?></p>
+		<ol>
+			<li><?php _e('Send an email to all admins when contributor submits a post to be published.', self::$text_domain); ?></li>
+			<li><?php _e('Send an email to contributor when post is published.', self::$text_domain); ?></li>
+		</ol>
+		<?php
 	}
 	
 	/**
