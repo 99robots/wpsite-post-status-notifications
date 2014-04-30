@@ -69,6 +69,8 @@ class WPSitePostStatusNotification {
 	private static $text_domain = 'wpsite-post-status-notification';
 	
 	private static $info_page = 'wpsite-post-status-notification-admin-info';
+	
+	private static $web_page = 'http://www.wpsite.net/plugin/post-status-notifications';
 
 	/**
 	 * Load the text domain 
@@ -101,7 +103,7 @@ class WPSitePostStatusNotification {
 	 * @since 1.0.0
 	 */
 	static function wpsite_post_status_notification_settings_link($links) { 
-		$settings_link = '<a href="tools.php?page=' . self::$info_page . '">Info</a>'; 
+		$settings_link = '<a target="_blank" href="' . self::$web_page . '">Info</a>'; 
 		array_unshift($links, $settings_link); 
 		return $links; 
 	}
@@ -115,7 +117,8 @@ class WPSitePostStatusNotification {
 	
 		 /* Cast the first sub menu to the settings menu */
 	    
-	    $page_hook_suffix = add_submenu_page(
+	    /*
+$page_hook_suffix = add_submenu_page(
 	    	'tools.php', 												// parent slug
 	    	__('WPsite Post SN', self::$text_domain), 						// Page title
 	    	__('WPsite Post SN', self::$text_domain), 						// Menu name
@@ -123,6 +126,7 @@ class WPSitePostStatusNotification {
 	    	self::$info_page, 										// slug
 	    	array('WPSitePostStatusNotification', 'wpsite_admin_menu_info_callback')	// Callback function
 	    );
+*/
 	}
 	
 	/**
