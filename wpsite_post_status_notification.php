@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: WPSite Post Status Notification Beta
-plugin URI: wpsite-post-status-notification
-Description:
+Plugin Name: WPSite Post Status Notifications
+plugin URI: http://www.wpsite.net/plugin/post-status-notifications
+Description: Send post status notifications by email to Administrators and Contributors when posts are submitted for review or published. Great for multi-author sites to improve editorial workflow.
 version: 1.0
-Author: Kyle Benk
-Author URI: http://kylebenkapps.com
+Author: WPSITE.net
+Author URI: http://wpsite.net
 License: GPL2
 */
 
