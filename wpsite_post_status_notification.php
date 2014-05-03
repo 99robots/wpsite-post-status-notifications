@@ -64,8 +64,6 @@ class WPSitePostStatusNotification {
 	
 	private static $version_setting_name = 'wpsite_post_status_notification_verison';
 	
-	private static $jquery_latest = 'http://code.jquery.com/jquery-latest.min.js';
-	
 	private static $text_domain = 'wpsite-post-status-notification';
 	
 	private static $info_page = 'wpsite-post-status-notification-admin-info';
@@ -155,7 +153,7 @@ $page_hook_suffix = add_submenu_page(
 		// Notifiy Admin that Contributor has writen a post
 		
 	    if ($new_status == 'pending' && user_can($post->post_author, 'edit_posts') && !user_can($post->post_author, 'publish_posts')) {
-	    
+	    	
 	    	$url = get_permalink($post->ID);
 	    	$edit_link = get_edit_post_link($post->ID, '');
 			$preview_link = get_permalink($post->ID) . '&preview=true';
@@ -182,6 +180,7 @@ $page_hook_suffix = add_submenu_page(
 			
 			foreach ($users as $user) {
 				$result = wp_mail($user->user_email, $subject, $message);
+				error_log($result);
 			}
 	    }
 	    
