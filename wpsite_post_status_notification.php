@@ -38,27 +38,27 @@ if (!defined('WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM'))
  * Activatation / Deactivation 
  */  
 
-register_activation_hook( __FILE__, array('WPSitePostStatusNotification', 'register_activation'));
+register_activation_hook( __FILE__, array('WPSitePostStatusNotifications', 'register_activation'));
 
 /** 
  * Hooks / Filter 
  */
  
-add_action('transition_post_status', array('WPSitePostStatusNotification', 'wpsite_send_email'), 10, 3 );
-add_action('init', array('WPSitePostStatusNotification', 'load_textdoamin'));
-add_action('admin_menu', array('WPSitePostStatusNotification', 'wpsite_admin_menu_info'));
+add_action('transition_post_status', array('WPSitePostStatusNotifications', 'wpsite_send_email'), 10, 3 );
+add_action('init', array('WPSitePostStatusNotifications', 'load_textdoamin'));
+add_action('admin_menu', array('WPSitePostStatusNotifications', 'wpsite_admin_menu'));
 
 $plugin = plugin_basename(__FILE__); 
-add_filter("plugin_action_links_$plugin", array('WPSitePostStatusNotification', 'wpsite_post_status_notification_settings_link'));
+add_filter("plugin_action_links_$plugin", array('WPSitePostStatusNotifications', 'wpsite_post_status_notification_settings_link'));
 
 /** 
- *  WPSitePostStatusNotification main class
+ *  WPSitePostStatusNotifications main class
  *
  * @since 1.0.0
  * @using Wordpress 3.8
  */
 
-class WPSitePostStatusNotification {
+class WPSitePostStatusNotifications {
 
 	/* Properties */
 	
@@ -66,9 +66,39 @@ class WPSitePostStatusNotification {
 	
 	private static $text_domain = 'wpsite-post-status-notification';
 	
-	private static $info_page = 'wpsite-post-status-notification-admin-info';
+	private static $settings_page = 'wpsite-post-status-notification-admin-settings';
 	
 	private static $web_page = 'http://www.wpsite.net/plugin/post-status-notifications';
+	
+	/* Share Link */
+	
+	private static $facebook_share_link = 'https://www.facebook.com/sharer/sharer.php?u=';
+	
+	private static $twitter_share_link = 'https://twitter.com/intent/tweet?url=';
+	
+	private static $google_share_link = 'https://plus.google.com/share?url=';
+	
+	private static $linkedin_share_link = 'https://www.linkedin.com/shareArticle?url=';
+	
+	/* Default Settings */
+	
+	private static $default = array(
+		'notify'		=> 'admins',
+		'post_types'	=> array('post'),
+		'message'		=> array(
+			'cc_email'						=> '',
+			'from_email'					=> '',
+			'content_published_contributor'	=> '',
+			'content_published'				=> '',
+			'content_pending'				=> '',
+			'share_links'					=> array(
+				'twitter'	=> true,
+				'facebook'	=> true,
+				'google'	=> true,
+				'linkedin'	=> true
+			)
+		)
+	);
 
 	/**
 	 * Load the text domain 
@@ -101,7 +131,7 @@ class WPSitePostStatusNotification {
 	 * @since 1.0.0
 	 */
 	static function wpsite_post_status_notification_settings_link($links) { 
-		$settings_link = '<a target="_blank" href="' . self::$web_page . '">Info</a>'; 
+		$settings_link = '<a href="tools.php?page=' . self::$settings_page . '">Settings</a>'; 
 		array_unshift($links, $settings_link); 
 		return $links; 
 	}
@@ -111,20 +141,28 @@ class WPSitePostStatusNotification {
 	 * 
 	 * @since 1.0.0
 	 */
-	static function wpsite_admin_menu_info() {
+	static function wpsite_admin_menu() {
 	
 		 /* Cast the first sub menu to the settings menu */
 	    
-	    /*
-$page_hook_suffix = add_submenu_page(
+	    $settings_page_load = add_submenu_page(
 	    	'tools.php', 												// parent slug
-	    	__('WPsite Post SN', self::$text_domain), 						// Page title
-	    	__('WPsite Post SN', self::$text_domain), 						// Menu name
+	    	__('WPsite Post Status Notifications', self::$text_domain), 						// Page title
+	    	__('WPsite Post Status Notifications', self::$text_domain), 						// Menu name
 	    	'manage_options', 											// Capabilities
-	    	self::$info_page, 										// slug
-	    	array('WPSitePostStatusNotification', 'wpsite_admin_menu_info_callback')	// Callback function
+	    	self::$settings_page, 										// slug
+	    	array('WPSitePostStatusNotifications', 'wpsite_admin_menu_info_callback')	// Callback function
 	    );
-*/
+	    add_action("admin_print_scripts-$settings_page_load", array('WPSitePostStatusNotifications', 'inline_scripts_admin'));
+	}
+	
+	/**
+	 * Hooks to 'admin_print_scripts-$page' 
+	 * 
+	 * @since 1.0.0
+	 */
+	static function inline_scripts_admin() {
+		wp_enqueue_style('wpsite_post_status_notifications_admin_css', WPSITE_POST_STATUS_NOTIFICATION_PLUGIN_URL . '/include/css/wpsite_post_status_notifications_admin.css');
 	}
 	
 	/**
@@ -133,13 +171,270 @@ $page_hook_suffix = add_submenu_page(
 	 * @since 1.0.0
 	 */
 	static function wpsite_admin_menu_info_callback() {
+	
+		/* Get all post types that are public */
+										
+		$post_types = get_post_types(array('public' => true)); 
+	
+		$settings = get_option('wpsite_post_status_notifications_settings');
+			
+		/* Default values */
+		
+		if ($settings === false) {
+			$settings = self::$default;
+		}
+		
+		/* Save data nd check nonce */
+		
+		if (isset($_POST['submit']) && check_admin_referer('wpsite_post_status_notifications_admin_settings')) {
+		
+			/* Determine Post Types */
+			
+			$post_types_array = array();
+			
+			foreach ($post_types as $post_type) {
+				if (isset($_POST['wpsite_post_status_notifications_settings_post_types_' . $post_type]) && $_POST['wpsite_post_status_notifications_settings_post_types_' . $post_type]) 
+					$post_types_array[] = $post_type;
+			}
+			
+			$settings = array(
+				'notify'		=> $_POST['wpsite_post_status_notifications_settings_notify_users'],
+				'post_types'	=> $post_types_array,
+				'message'		=> array(
+					'cc_email'		=> isset($_POST['wpsite_post_status_notifications_settings_message_cc_email']) ?stripcslashes(sanitize_text_field($_POST['wpsite_post_status_notifications_settings_message_cc_email'])) : '',
+					'from_email'	=> isset($_POST['wpsite_post_status_notifications_settings_message_from_email']) ?stripcslashes(sanitize_text_field($_POST['wpsite_post_status_notifications_settings_message_from_email'])) : '',
+					'content_published'	=> isset($_POST['wpsite_post_status_notifications_settings_message_content_published']) ?stripcslashes(sanitize_text_field($_POST['wpsite_post_status_notifications_settings_message_content_published'])) : '',
+					'content_published_contributor'	=> isset($_POST['wpsite_post_status_notifications_settings_message_content_published_contributor']) ?stripcslashes(sanitize_text_field($_POST['wpsite_post_status_notifications_settings_message_content_published_contributor'])) : '',
+					'content_pending'	=> isset($_POST['wpsite_post_status_notifications_settings_message_content_pending']) ?stripcslashes(sanitize_text_field($_POST['wpsite_post_status_notifications_settings_message_content_pending'])) : '',
+					'share_links'	=> array(
+						'twitter'	=> isset($_POST['wpsite_post_status_notifications_settings_message_share_links_twitter']) && $_POST['wpsite_post_status_notifications_settings_message_share_links_twitter'] ? true : false,
+						'facebook'	=> isset($_POST['wpsite_post_status_notifications_settings_message_share_links_facebook']) && $_POST['wpsite_post_status_notifications_settings_message_share_links_facebook'] ? true : false,
+						'google'	=> isset($_POST['wpsite_post_status_notifications_settings_message_share_links_google']) && $_POST['wpsite_post_status_notifications_settings_message_share_links_google'] ? true : false,
+						'linkedin'	=> isset($_POST['wpsite_post_status_notifications_settings_message_share_links_linkedin']) && $_POST['wpsite_post_status_notifications_settings_message_share_links_linkedin'] ? true : false,
+					)
+				)
+			);
+			
+			/* 'active'	=> isset($_POST['wpsite_follow_us_settings_twitter_active']) && $_POST['wpsite_follow_us_settings_twitter_active'] ? true : false, */
+			
+			update_option('wpsite_post_status_notifications_settings', $settings);
+		}
+		
+		
 		?>
-		<h1><?php _e('WPsite Post Status Notification', self::$text_domain); ?></h1>
-		<p><?php _e('This plugin consists of two main features:', self::$text_domain); ?></p>
-		<ol>
-			<li><?php _e('Send an email to all admins when contributor submits a post to be published.', self::$text_domain); ?></li>
-			<li><?php _e('Send an email to contributor when post is published.', self::$text_domain); ?></li>
-		</ol>
+		<div class="wrap wpsite_admin_panel">
+			<div class="wpsite_admin_panel_banner">
+				<h1><?php _e('WPsite Post Status Notifications', self::$text_domain); ?></h1>
+			</div>
+					
+			<div id="wpsite_admin_panel_settings" class="wpsite_admin_panel_content">
+				
+				<form method="post">
+				
+					<h3><?php _e('Post Types', self::$text_domain); ?></h3>
+							
+					<table>
+						<tbody>
+						
+							<!-- Include these post types -->
+							
+							<tr>
+								<th class="wpsite_admin_table_th">
+									<label><?php _e('Include these post types', self::$text_domain); ?></label>
+									<td class="wpsite_admin_table_td">
+									
+										<?php foreach ($post_types as $post_type) { ?>
+											<input type="checkbox" id="wpsite_post_status_notifications_settings_post_types_<?php echo $post_type; ?>" name="wpsite_post_status_notifications_settings_post_types_<?php echo $post_type; ?>" <?php echo (isset($settings['post_types']) && in_array($post_type, $settings['post_types']) ? 'checked="checked"' : '');?>/><label><?php printf(__('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%s', self::$text_domain), $post_type); ?></label><br />
+										<?php } ?>
+										
+									</td>
+								</th>
+							</tr>
+							
+						</tbody>
+					</table>
+					
+					<h3><?php _e('Share Links', self::$text_domain); ?></h3>
+							
+					<table>
+						<tbody>
+						
+							<!-- Twitter -->
+							
+							<tr>
+								<th class="wpsite_admin_table_th">
+									<label><?php _e('Twitter', self::$text_domain); ?></label>
+									<td class="wpsite_admin_table_td">
+										<input id="wpsite_post_status_notifications_settings_message_share_links_twitter" name="wpsite_post_status_notifications_settings_message_share_links_twitter" type="checkbox" value="users" <?php echo isset($settings['message']['share_links']['twitter']) && $settings['message']['share_links']['twitter'] ? 'checked="checked"' : ''; ?>>
+									</td>
+								</th>
+							</tr>
+							
+							<!-- Facebook -->
+							
+							<tr>
+								<th class="wpsite_admin_table_th">
+									<label><?php _e('Facebook', self::$text_domain); ?></label>
+									<td class="wpsite_admin_table_td">
+										<input id="wpsite_post_status_notifications_settings_message_share_links_facebook" name="wpsite_post_status_notifications_settings_message_share_links_facebook" type="checkbox" value="users" <?php echo isset($settings['message']['share_links']['facebook']) && $settings['message']['share_links']['facebook'] ? 'checked="checked"' : ''; ?>>
+									</td>
+								</th>
+							</tr>
+							
+							<!-- Google -->
+							
+							<tr>
+								<th class="wpsite_admin_table_th">
+									<label><?php _e('Google', self::$text_domain); ?></label>
+									<td class="wpsite_admin_table_td">
+										<input id="wpsite_post_status_notifications_settings_message_share_links_google" name="wpsite_post_status_notifications_settings_message_share_links_google" type="checkbox" value="users" <?php echo isset($settings['message']['share_links']['google']) && $settings['message']['share_links']['google'] ? 'checked="checked"' : ''; ?>>
+									</td>
+								</th>
+							</tr>
+							
+							<!-- LinkedIn -->
+							
+							<tr>
+								<th class="wpsite_admin_table_th">
+									<label><?php _e('LinkedIn', self::$text_domain); ?></label>
+									<td class="wpsite_admin_table_td">
+										<input id="wpsite_post_status_notifications_settings_message_share_links_linkedin" name="wpsite_post_status_notifications_settings_message_share_links_linkedin" type="checkbox" value="users" <?php echo isset($settings['message']['share_links']['linkedin']) && $settings['message']['share_links']['linkedin'] ? 'checked="checked"' : ''; ?>>
+									</td>
+								</th>
+							</tr>
+							
+						</tbody>
+					</table>
+					
+					<h3><?php _e('When a post is published notify: ', self::$text_domain); ?></h3>
+							
+					<table>
+						<tbody>
+							
+							
+							<!-- Notify all Users-->
+						
+							<tr>
+								<th class="wpsite_admin_table_th">
+									<label><?php _e('All Users', self::$text_domain); ?></label>
+									<td class="wpsite_admin_table_td">
+										<input name="wpsite_post_status_notifications_settings_notify_users" type="radio" value="users" <?php echo isset($settings['notify']) && $settings['notify'] == 'users' ? 'checked' : ''; ?>>
+									</td>
+								</th>
+							</tr>
+							
+							<!-- Notify Admins only -->
+						
+							<tr>
+								<th class="wpsite_admin_table_th">
+									<label><?php _e('Admins only', self::$text_domain); ?></label>
+									<td class="wpsite_admin_table_td">
+										<input name="wpsite_post_status_notifications_settings_notify_users" type="radio" value="admins" <?php echo isset($settings['notify']) && $settings['notify'] == 'admins' ? 'checked' : ''; ?>>
+									</td>
+								</th>
+							</tr>
+							
+							<!-- Notify Author only -->
+						
+							<tr>
+								<th class="wpsite_admin_table_th">
+									<label><?php _e('Author only', self::$text_domain); ?></label>
+									<td class="wpsite_admin_table_td">
+										<input name="wpsite_post_status_notifications_settings_notify_users" type="radio" value="author" <?php echo isset($settings['notify']) && $settings['notify'] == 'author' ? 'checked' : ''; ?>>
+									</td>
+								</th>
+							</tr>
+							
+						</tbody>
+					</table>
+							
+					<h3><?php _e('Email Message', self::$text_domain); ?></h3>
+							
+					<table>
+						<tbody>
+						
+							<!-- From -->
+							
+							<tr>
+								<th class="wpsite_admin_table_th">
+									<label><?php _e('From', self::$text_domain); ?></label><br/>
+									<em><label><?php _e('Leave blank for default (wordpress@yoursite.com)', self::$text_domain); ?></label></em>
+									<td class="wpsite_admin_table_td">
+										<input id="wpsite_post_status_notifications_settings_message_from_email" name="wpsite_post_status_notifications_settings_message_from_email" type="text" size="50" value="<?php echo esc_attr($settings['message']['from_email']); ?>"><br/>
+										<em><label><?php _e('email (e.g. example@gmail.com or example@gmail.com, example1@gmail.com)', self::$text_domain); ?></label></em><br/>
+									</td>
+								</th>
+							</tr>
+						
+							<!-- Cc -->
+									
+							<tr>
+								<th class="wpsite_admin_table_th">
+									<label><?php _e('Cc', self::$text_domain); ?></label><br/>
+									<em><label><?php _e('Leave blank for default (N/A)', self::$text_domain); ?></label></em>
+									<td class="wpsite_admin_table_td">
+										<input id="wpsite_post_status_notifications_settings_message_cc_email" name="wpsite_post_status_notifications_settings_message_cc_email" type="text" size="50" value="<?php echo esc_attr($settings['message']['cc_email']); ?>"><br/>
+										<em><label><?php _e('email (e.g. example@gmail.com or example@gmail.com, example1@gmail.com)', self::$text_domain); ?></label></em>
+									</td>
+								</th>
+							</tr>
+						
+							<!-- Content for email when post is published -->
+							
+							<!--
+<tr>
+								<th class="wpsite_admin_table_th">
+									<label><?php _e('Content for email when post is published', self::$text_domain); ?></label><br/>
+									<td class="wpsite_admin_table_td">
+										<textarea rows="10" cols="50" id="wpsite_post_status_notifications_settings_message_content_published" name="wpsite_post_status_notifications_settings_message_content_published"><?php echo esc_attr($settings['message']['content_published']); ?></textarea>
+									</td>
+								</th>
+							</tr>
+-->
+							
+							<!-- Content for email sent to contributor when their post is published -->
+							
+							<!--
+<tr>
+								<th class="wpsite_admin_table_th">
+									<label><?php _e('Content for email sent to contributor when their post is published', self::$text_domain); ?></label><br/>
+									<td class="wpsite_admin_table_td">
+										<textarea rows="10" cols="50" id="wpsite_post_status_notifications_settings_message_content_published_contributor" name="wpsite_post_status_notifications_settings_message_content_published_contributor"><?php echo esc_attr($settings['message']['content_published_contributor']); ?></textarea>
+									</td>
+								</th>
+							</tr>
+-->
+							
+							<!-- Content for email sent to admin when contributor submits post for review -->
+							
+							<!--
+<tr>
+								<th class="wpsite_admin_table_th">
+									<label><?php _e('Content for email sent to admin when contributor submits post for review', self::$text_domain); ?></label><br/>
+									<td class="wpsite_admin_table_td">
+										<textarea rows="10" cols="50" id="wpsite_post_status_notifications_settings_message_content_pending" name="wpsite_post_status_notifications_settings_message_content_pending"><?php echo esc_attr($settings['message']['content_pending']); ?></textarea>
+									</td>
+								</th>
+							</tr>
+-->
+								
+						</tbody>
+					</table>
+					
+					<?php wp_nonce_field('wpsite_post_status_notifications_admin_settings'); ?>
+						
+					<?php submit_button(); ?>
+						
+				</form>
+		 
+			</div>
+					
+			<div id="wpsite_admin_panel_sidebar" class="wpsite_admin_panel_content">
+				<div class="wpsite_admin_panel_sidebar_img">
+					<img src="http://www.wpsite.net/wp-content/uploads/2011/10/logo-only-100h.png">
+				</div>
+			</div>
+		</div>
 		<?php
 	}
 	
@@ -150,9 +445,69 @@ $page_hook_suffix = add_submenu_page(
 	 */
 	static function wpsite_send_email( $new_status, $old_status, $post ) {
 	
+		$settings = get_option('wpsite_post_status_notifications_settings');
+			
+		/* Default values */
+		
+		if ($settings === false) {
+			$settings = self::$default;
+		}
+		
+		// Set all headers
+		
+		$headers = array();
+		
+		if (isset($settings['message']['from_email']) && $settings['message']['from_email'] != '') {
+			$headers[] = "From: " . $settings['message']['from_email'] . "\r\n";
+		}
+		
+		if (isset($settings['message']['cc_email']) && $settings['message']['cc_email'] != '') {
+			$headers[] = "Cc: " . $settings['message']['cc_email'] . "\r\n";
+		}
+		
+		if (isset($settings['message']['bcc_email']) && $settings['message']['bcc_email'] != '') {
+			$headers[] = "Bcc: " . $settings['message']['bcc_email'] . "\r\n";
+		}
+		
+		if (isset($settings['message']['share_links'])) {
+			$check = false;
+			foreach ($settings['message']['share_links'] as $link) {
+				if ($link) {
+					$share_links_check = true;
+				}
+			}
+		}
+		
+		$url = get_permalink($post->ID);
+		$share_links = '';
+		
+		if (isset($share_links_check) && $share_links_check) {
+			$share_links = "\r\n\r\nShare Links\r\n";
+			
+			if ($settings['message']['share_links']['twitter']) {
+				$share_links .= "Twitter: " . esc_url(self::$twitter_share_link . $url) . "\r\n";
+			}
+			
+			if ($settings['message']['share_links']['facebook']) {
+				$share_links .= "Facebook: " . esc_url(self::$facebook_share_link . $url) . "\r\n";
+			}
+			
+			if ($settings['message']['share_links']['google']) {
+				$share_links .= "Google+: " . esc_url(self::$google_share_link . $url) . "\r\n";
+			}
+			
+			if ($settings['message']['share_links']['linkedin']) {
+				$share_links .= "LinkedIn: " . esc_url(self::$linkedin_share_link . $url) . "\r\n";
+			}
+		}
+		
+		$wpsite_info = "\r\n\r\nThis was sent by WPsite Post Status Notifications." .  "\r\n" .  "wpsite.net";
+		$just_published_contributor = '"' . $post->post_title . '"' . " was just published!.  Check it out, and thanks for the hard work.\r\n";
+	    $just_published = '"' . $post->post_title . '"' . " was just published!.\r\n";
+	
 		// Notifiy Admin that Contributor has writen a post
 		
-	    if ($new_status == 'pending' && user_can($post->post_author, 'edit_posts') && !user_can($post->post_author, 'publish_posts')) {
+	    if (in_array($post->post_type, $settings['post_types']) && $new_status == 'pending' && user_can($post->post_author, 'edit_posts') && !user_can($post->post_author, 'publish_posts')) {
 	    	
 	    	$url = get_permalink($post->ID);
 	    	$edit_link = get_edit_post_link($post->ID, '');
@@ -160,43 +515,88 @@ $page_hook_suffix = add_submenu_page(
 	    	$username = get_userdata($post->post_author);
 	    
 	    	$subject = 'Please moderate: "' . $post->post_title . '"';
-	    	$message = 'A new post: "' . $post->post_title . '" from contributor: ' . $username->user_login . ' is now pending.';
-	    	//$message .= "\r\n" . get_edit_post_link($post->ID, '');
+	    	$message = 'A new ' . $post->post_type . ': "' . $post->post_title . '" from contributor: ' . $username->user_login . ' is now pending.';
 	    	
 	    	$message .= "\r\n\r\n";
 	    	$message .= "Author: $username->user_login\r\n";
-	    	//$message .= "URL: $url\r\n";
-	    	$message .= "Title of Post: $post->post_title";
+	    	$message .= "Title of " . $post->post_type . ": $post->post_title";
 	    	
 	    	$message .= "\r\n\r\n";
-	    	$message .= "Edit the post: $edit_link\r\n";
+	    	$message .= "Edit the " . $post->post_type . ": $edit_link\r\n";
 	    	$message .= "Preview it: $preview_link";
 	    	
-	    	$message .= "\r\n\r\n This was sent by WPsite Post Status Notification." .  "\r\n" .  "wpsite.net";
+	    	$message .= $wpsite_info;
 	    	
 			$users = get_users(array(
 				'role'	=> 'administrator'
 			));
 			
 			foreach ($users as $user) {
-				$result = wp_mail($user->user_email, $subject, $message);
-				error_log($result);
+				$result = wp_mail($user->user_email, $subject, $message, $headers);
 			}
 	    }
 	    
 	    // Notifiy Contributor that Admin has published their post
 	    
-	    else if ($old_status == 'pending' && $new_status == 'publish' && user_can($post->post_author, 'edit_posts') && !user_can($post->post_author, 'publish_posts')) {
-		    $username = get_userdata($post->post_author);
-		    $url = get_permalink($post->ID);
+	    if (in_array($post->post_type, $settings['post_types']) && $new_status == 'publish') {
 	    
-	    	$subject = "Published Post:" . " " . $post->post_title;
-	    	$message = '"' . $post->post_title . '"' . " was just published!.  Check it out, and thanks for the hard work.\r\n";
-	    	$message .= $url;
-	    	
-	    	$message .= "\r\n\r\n This was sent by WPsite Post Status Notification." .  "\r\n" .  "wpsite.net";
+	    	if (isset($settings['notify']) && $settings['notify'] == 'author' && $old_status == 'pending' && user_can($post->post_author, 'edit_posts') && !user_can($post->post_author, 'publish_posts')) {
+		    	$username = get_userdata($post->post_author);
+		    
+		    	$subject = "Published " . $post->post_type . ":" . " " . $post->post_title;
+		    	$message = $just_published_contributor . $url . $share_links . $wpsite_info;
+				
+				$result = wp_mail($username->user_email, $subject, $message, $headers);
+	    	}
+		   
 			
-			$result = wp_mail($username->user_email, $subject, $message);
+			if (isset($settings['notify']) && $settings['notify'] != 'author') {
+			
+				$subject = "Published " . $post->post_type . ":" . " " . $post->post_title;
+		    	$message = $just_published . $url . $share_links . $wpsite_info;
+			
+				// Admins
+			
+				if ($settings['notify'] == 'admins' && ($old_status == 'pending' || $old_status != $new_status)) {
+					$users = get_users(array(
+						'role'		=> 'administrator'
+					));
+					
+					foreach ($users as $user) {
+						$result = wp_mail($user->user_email, $subject, $message, $headers);
+					}
+				}
+				
+				if ($settings['notify'] == 'users' && ($old_status == 'pending' || $old_status != $new_status)) {
+				
+					$exclude_array = array();
+				
+					if ($old_status == 'pending' && user_can($post->post_author, 'edit_posts') && !user_can($post->post_author, 'publish_posts')) {
+						
+						$username = get_userdata($post->post_author);
+		    
+				    	$subject = "Published " . $post->post_type . ":" . " " . $post->post_title;
+				    	$message = $just_published_contributor . $url . $share_links . $wpsite_info;
+						
+						$result = wp_mail($username->user_email, $subject, $message, $headers);
+						
+						$exclude_array[] = $post->post_author;
+					}
+					
+					$subject = "Published " . $post->post_type . ":" . " " . $post->post_title;
+			    	$message = $just_published . $url . $share_links . $wpsite_info;
+			    	
+			    	error_log($message);
+				
+					$users = get_users(array(
+						'exclude'	=> $exclude_array
+					));
+					
+					foreach ($users as $user) {
+						$result = wp_mail($user->user_email, $subject, $message, $headers);
+					}
+				}
+			}
 	    }
 	}
 }
