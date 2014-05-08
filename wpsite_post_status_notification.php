@@ -149,7 +149,7 @@ class WPSitePostStatusNotifications {
 		 /* Cast the first sub menu to the settings menu */
 	    
 	    $settings_page_load = add_submenu_page(
-	    	'tools.php', 												// parent slug
+	    	'options-general.php', 												// parent slug
 	    	__('WPsite Post Status Notifications', self::$text_domain), 						// Page title
 	    	__('WPsite Post Status Notifications', self::$text_domain), 						// Menu name
 	    	'manage_options', 											// Capabilities
