@@ -87,6 +87,7 @@ class WPSitePostStatusNotifications {
 		'post_types'	=> array('post'),
 		'message'		=> array(
 			'cc_email'						=> '',
+			'bcc_email'						=> '',
 			'from_email'					=> '',
 			'subject_published_contributor'	=> '',
 			'subject_published'				=> '',
@@ -205,6 +206,7 @@ class WPSitePostStatusNotifications {
 				'post_types'	=> $post_types_array,
 				'message'		=> array(
 					'cc_email'		=> isset($_POST['wpsite_post_status_notifications_settings_message_cc_email']) ?stripcslashes(sanitize_text_field($_POST['wpsite_post_status_notifications_settings_message_cc_email'])) : '',
+					'bcc_email'		=> isset($_POST['wpsite_post_status_notifications_settings_message_bcc_email']) ?stripcslashes(sanitize_text_field($_POST['wpsite_post_status_notifications_settings_message_bcc_email'])) : '',
 					'from_email'	=> isset($_POST['wpsite_post_status_notifications_settings_message_from_email']) ?stripcslashes(sanitize_text_field($_POST['wpsite_post_status_notifications_settings_message_from_email'])) : '',
 					'subject_published'	=> isset($_POST['wpsite_post_status_notifications_settings_message_subject_published']) ?stripcslashes(sanitize_text_field($_POST['wpsite_post_status_notifications_settings_message_subject_published'])) : '',
 					'subject_published_contributor'	=> isset($_POST['wpsite_post_status_notifications_settings_message_subject_published_contributor']) ?stripcslashes(sanitize_text_field($_POST['wpsite_post_status_notifications_settings_message_subject_published_contributor'])) : '',
@@ -400,6 +402,19 @@ class WPSitePostStatusNotifications {
 											<label><?php _e('Cc', self::$text_domain); ?></label><br/>
 											<td class="wpsite_admin_table_td">
 												<input id="wpsite_post_status_notifications_settings_message_cc_email" name="wpsite_post_status_notifications_settings_message_cc_email" type="text" size="50" value="<?php echo esc_attr($settings['message']['cc_email']); ?>"><br/>
+												<em><label><?php _e('email (e.g. example@gmail.com or example@gmail.com, example1@gmail.com)', self::$text_domain); ?></label></em><br/>
+												<em><label><?php _e('default (none)', self::$text_domain); ?></label></em>
+											</td>
+										</th>
+									</tr>
+									
+									<!-- Bcc -->
+											
+									<tr>
+										<th class="wpsite_admin_table_th">
+											<label><?php _e('Bcc', self::$text_domain); ?></label><br/>
+											<td class="wpsite_admin_table_td">
+												<input id="wpsite_post_status_notifications_settings_message_bcc_email" name="wpsite_post_status_notifications_settings_message_bcc_email" type="text" size="50" value="<?php echo esc_attr($settings['message']['bcc_email']); ?>"><br/>
 												<em><label><?php _e('email (e.g. example@gmail.com or example@gmail.com, example1@gmail.com)', self::$text_domain); ?></label></em><br/>
 												<em><label><?php _e('default (none)', self::$text_domain); ?></label></em>
 											</td>
@@ -705,8 +720,6 @@ class WPSitePostStatusNotifications {
 					}
 					
 			    	$message .= $share_links . $wpsite_info;
-			    	
-			    	error_log($message);
 				
 					$users = get_users(array(
 						'exclude'	=> $exclude_array
