@@ -1,2 +1,2 @@
-wpsite-post-status-notification
+# WPsite Post Status Notifications
 ===============================
