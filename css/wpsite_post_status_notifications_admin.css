@@ -5,7 +5,7 @@
  */
  
 /* PLUGIN ADMIN PANEL - BACK-END */
-.wpsite_plugin_wrapper {position: relative; width: 1080px;overflow:hidden;background:#FFF;}
+.wpsite_plugin_wrapper {position: relative; width: 100%;overflow:hidden;background:#FFF;}
  
 .wpsite_plugin_header { background: url("../img/rainbow-strip-hz-wide.png") repeat-x center top;padding-top:5px;overflow:hidden;}
  
