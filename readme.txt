@@ -26,13 +26,13 @@ For more details, visit the http://www.wpsite.net for more information.
 
 == Installation ==
 
-You can install the Gabfire Widget Pack from your WordPress Dashboard or manually via FTP.
+You can install the WPsite Post Status Notifications plugin from your WordPress Dashboard or manually via FTP.
 
 = From WordPress Dashboard =
 Similar to all other plugins, follow these instructions:
 
 * Navigate to 'Plugins -> Add New' from your WordPress dashboard.
-* Search for `Post Status Notifications` and install it.
+* Search for `WPsite Post Status Notifications` and install it.
 * Activate the plugin from Plugins menu.
 * Configure the plugin's options from Post Status Notifications tab in your WP Admin.
 
