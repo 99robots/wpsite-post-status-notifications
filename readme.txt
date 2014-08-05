@@ -4,7 +4,7 @@ Donate link:
 Tags: post status, status, status notification, post notification, email notification, post status notification, notifier, contributors, submit for review, pending status, pending posts, published posts, contributions, post message, article submissions, admin notifications, editor notifications, contributor notification, post email, editorial workflow, edit flow
 Requires at least: 3.8
 Tested up to: 3.9
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,8 +17,13 @@ The Post Status Notifications plugin by WPsite.net provides an easy way to ensur
 = Features =
 Get a better editorial workflow by ensuring communication occurs related to articles submitted for review and subsequently published by administrators.
 
-* Email notification to Admin when a post is submitted for review
-* Email notification to Contributor when a post is published on the site
+* Email notification to Admin or Editor when a post is submitted for review
+* Email notification to Contributor, All Users, Admins or Editors when a post is published on the site
+* Custom Email Headers
+* Custom Email Subject and Message
+* Support for custom post types
+* Email based on user role
+* Share Links
 
 This is great plugin for every site that accepts user submitted content, has multiple authors, or site owners running content-heavy websites. Enhance your editorial workflow with proper communication to the relevant parties.
 
@@ -47,8 +52,16 @@ Similar to all other plugins, follow these instructions:
 == Screenshots ==
 
 1. Sample Email by Post Status Notification Plugin
+2. General Settings Page
 
 == Changelog ==
 
+= 1.1 =
+* Custom Email Headers
+* Custom Email Subject and Message
+* Support for custom post types
+* Email based on user role
+* Share Links
+
 = 1.0 =
-Initial release
+* Initial Release
