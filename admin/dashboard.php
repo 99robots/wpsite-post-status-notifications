@@ -120,7 +120,7 @@
 
 										<tr>
 											<th class="wpsite_admin_table_th">
-												<label><?php _e('All Users', self::$text_domain); ?></label>
+												<label><?php _e('Admins', self::$text_domain); ?></label>
 												<td class="wpsite_admin_table_td">
 													<input name="wpsite_post_status_notifications_settings_pending_notify" type="radio" value="administrator" <?php echo isset($settings['pending_notify']) && $settings['pending_notify'] == 'administrator' ? 'checked' : ''; ?>>
 												</td>
@@ -131,7 +131,7 @@
 
 										<tr>
 											<th class="wpsite_admin_table_th">
-												<label><?php _e('Admins only', self::$text_domain); ?></label>
+												<label><?php _e('Editors', self::$text_domain); ?></label>
 												<td class="wpsite_admin_table_td">
 													<input name="wpsite_post_status_notifications_settings_pending_notify" type="radio" value="editor" <?php echo isset($settings['pending_notify']) && $settings['pending_notify'] == 'editor' ? 'checked' : ''; ?>>
 												</td>
@@ -185,7 +185,7 @@
 											<th class="wpsite_admin_table_th">
 												<label><?php _e('Editors only', self::$text_domain); ?></label>
 												<td class="wpsite_admin_table_td">
-													<input name="wpsite_post_status_notifications_settings_publish_notify" type="radio" value="admins" <?php echo isset($settings['publish_notify']) && $settings['publish_notify'] == 'editors' ? 'checked' : ''; ?>>
+													<input name="wpsite_post_status_notifications_settings_publish_notify" type="radio" value="editors" <?php echo isset($settings['publish_notify']) && $settings['publish_notify'] == 'editors' ? 'checked' : ''; ?>>
 												</td>
 											</th>
 										</tr>
