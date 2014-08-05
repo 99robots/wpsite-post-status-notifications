@@ -70,7 +70,7 @@ class WPSitePostStatusNotifications {
 
 	private static $web_page = 'http://www.wpsite.net/plugin/post-status-notifications';
 
-	/* Share Link */
+	/* Share Links */
 
 	private static $facebook_share_link = 'https://www.facebook.com/sharer/sharer.php?u=';
 
@@ -83,9 +83,10 @@ class WPSitePostStatusNotifications {
 	/* Default Settings */
 
 	private static $default = array(
-		'notify'		=> 'author',
-		'post_types'	=> array('post'),
-		'message'		=> array(
+		'publish_notify'	=> 'contributor',
+		'pending_notify'	=> 'admin',
+		'post_types'		=> array('post'),
+		'message'			=> array(
 			'cc_email'						=> '',
 			'bcc_email'						=> '',
 			'from_email'					=> '',
@@ -202,9 +203,10 @@ class WPSitePostStatusNotifications {
 			}
 
 			$settings = array(
-				'notify'		=> $_POST['wpsite_post_status_notifications_settings_notify_users'],
-				'post_types'	=> $post_types_array,
-				'message'		=> array(
+				'publish_notify'	=> $_POST['wpsite_post_status_notifications_settings_publish_notify'],
+				'pending_notify'	=> $_POST['wpsite_post_status_notifications_settings_pending_notify'],
+				'post_types'		=> $post_types_array,
+				'message'			=> array(
 					'cc_email'		=> isset($_POST['wpsite_post_status_notifications_settings_message_cc_email']) ?stripcslashes(sanitize_text_field($_POST['wpsite_post_status_notifications_settings_message_cc_email'])) : '',
 					'bcc_email'		=> isset($_POST['wpsite_post_status_notifications_settings_message_bcc_email']) ?stripcslashes(sanitize_text_field($_POST['wpsite_post_status_notifications_settings_message_bcc_email'])) : '',
 					'from_email'	=> isset($_POST['wpsite_post_status_notifications_settings_message_from_email']) ?stripcslashes(sanitize_text_field($_POST['wpsite_post_status_notifications_settings_message_from_email'])) : '',
@@ -247,6 +249,12 @@ class WPSitePostStatusNotifications {
 
 		if ($settings === false) {
 			$settings = self::$default;
+		}
+
+		// If status did not change
+
+		if ($new_status == $old_status) {
+			return null;
 		}
 
 		// Set all headers
@@ -335,7 +343,7 @@ class WPSitePostStatusNotifications {
 	    	$message .= $wpsite_info;
 
 			$users = get_users(array(
-				'role'	=> 'administrator'
+				'role'	=> $settings['pending_notify']
 			));
 
 			foreach ($users as $user) {
@@ -349,7 +357,7 @@ class WPSitePostStatusNotifications {
 
 	    	// Notify Contributor that their post was published
 
-	    	if (isset($settings['notify']) && $settings['notify'] == 'author' && $old_status == 'pending' && user_can($post->post_author, 'edit_posts') && !user_can($post->post_author, 'publish_posts')) {
+	    	if (isset($settings['publish_notify']) && $settings['publish_notify'] == 'author' && $old_status == 'pending' && user_can($post->post_author, 'edit_posts') && !user_can($post->post_author, 'publish_posts')) {
 				$username = get_userdata($post->post_author);
 
 				// Custom Subject and Message
@@ -373,11 +381,11 @@ class WPSitePostStatusNotifications {
 
 			// Notify All Admins or All Users
 
-			if (isset($settings['notify']) && $settings['notify'] != 'author') {
+			if (isset($settings['publish_notify']) && $settings['publish_notify'] != 'author') {
 
 				// Notify All Admins
 
-				if ($settings['notify'] == 'admins' && ($old_status == 'pending' || $old_status != $new_status)) {
+				if ($settings['publish_notify'] == 'admins' && ($old_status == 'pending' || $old_status != $new_status)) {
 
 					// Custom Subject and Message
 
@@ -405,9 +413,39 @@ class WPSitePostStatusNotifications {
 					}
 				}
 
+				// Notify All Editors
+
+				if ($settings['publish_notify'] == 'editors' && ($old_status == 'pending' || $old_status != $new_status)) {
+
+					// Custom Subject and Message
+
+			    	if (isset($settings['message']['subject_published']) && $settings['message']['subject_published'] != '') {
+						$subject = $settings['message']['subject_published'];
+					} else {
+						$subject = "Published " . $post->post_type . ":" . " " . $post->post_title;
+					}
+
+					if (isset($settings['message']['content_published']) && $settings['message']['content_published'] != '') {
+						$message = $settings['message']['content_published'];
+					} else {
+						$message = $just_published . $url;
+					}
+
+			    	$message .= $share_links . $wpsite_info;
+
+
+					$users = get_users(array(
+						'role'		=> 'editor'
+					));
+
+					foreach ($users as $user) {
+						$result = wp_mail($user->user_email, $subject, $message, $headers);
+					}
+				}
+
 				// Notify All Users
 
-				if ($settings['notify'] == 'users' && ($old_status == 'pending' || $old_status != $new_status)) {
+				if ($settings['publish_notify'] == 'users' && ($old_status == 'pending' || $old_status != $new_status)) {
 
 					$exclude_array = array();
 

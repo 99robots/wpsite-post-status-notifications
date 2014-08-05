@@ -111,40 +111,81 @@
 									</tbody>
 								</table>
 
-								<h3><?php _e('When a post is published notify: ', self::$text_domain); ?></h3>
+								<h3><?php _e('When a contributor submits a post for review notify: ', self::$text_domain); ?></h3>
 
 								<table>
 									<tbody>
 
-										<!-- Notify Contributor only -->
-
-										<tr>
-											<th class="wpsite_admin_table_th">
-												<label><?php _e('Contributor only', self::$text_domain); ?></label><br/>
-												<td class="wpsite_admin_table_td">
-													<input name="wpsite_post_status_notifications_settings_notify_users" type="radio" value="author" <?php echo isset($settings['notify']) && $settings['notify'] == 'author' ? 'checked' : ''; ?>>
-												</td>
-											</th>
-										</tr>
-
-										<!-- Notify all Users-->
+										<!-- Admins-->
 
 										<tr>
 											<th class="wpsite_admin_table_th">
 												<label><?php _e('All Users', self::$text_domain); ?></label>
 												<td class="wpsite_admin_table_td">
-													<input name="wpsite_post_status_notifications_settings_notify_users" type="radio" value="users" <?php echo isset($settings['notify']) && $settings['notify'] == 'users' ? 'checked' : ''; ?>>
+													<input name="wpsite_post_status_notifications_settings_pending_notify" type="radio" value="administrator" <?php echo isset($settings['pending_notify']) && $settings['pending_notify'] == 'administrator' ? 'checked' : ''; ?>>
 												</td>
 											</th>
 										</tr>
 
-										<!-- Notify Admins only -->
+										<!-- Editors -->
 
 										<tr>
 											<th class="wpsite_admin_table_th">
 												<label><?php _e('Admins only', self::$text_domain); ?></label>
 												<td class="wpsite_admin_table_td">
-													<input name="wpsite_post_status_notifications_settings_notify_users" type="radio" value="admins" <?php echo isset($settings['notify']) && $settings['notify'] == 'admins' ? 'checked' : ''; ?>>
+													<input name="wpsite_post_status_notifications_settings_pending_notify" type="radio" value="editor" <?php echo isset($settings['pending_notify']) && $settings['pending_notify'] == 'editor' ? 'checked' : ''; ?>>
+												</td>
+											</th>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<h3><?php _e("When contributor's post is published notify: ", self::$text_domain); ?></h3>
+
+								<table>
+									<tbody>
+
+										<!-- Contributor -->
+
+										<tr>
+											<th class="wpsite_admin_table_th">
+												<label><?php _e('Contributor only', self::$text_domain); ?></label><br/>
+												<td class="wpsite_admin_table_td">
+													<input name="wpsite_post_status_notifications_settings_publish_notify" type="radio" value="author" <?php echo isset($settings['publish_notify']) && $settings['publish_notify'] == 'author' ? 'checked' : ''; ?>>
+												</td>
+											</th>
+										</tr>
+
+										<!-- All Users -->
+
+										<tr>
+											<th class="wpsite_admin_table_th">
+												<label><?php _e('All Users', self::$text_domain); ?></label>
+												<td class="wpsite_admin_table_td">
+													<input name="wpsite_post_status_notifications_settings_publish_notify" type="radio" value="users" <?php echo isset($settings['publish_notify']) && $settings['publish_notify'] == 'users' ? 'checked' : ''; ?>>
+												</td>
+											</th>
+										</tr>
+
+										<!-- Admins -->
+
+										<tr>
+											<th class="wpsite_admin_table_th">
+												<label><?php _e('Admins only', self::$text_domain); ?></label>
+												<td class="wpsite_admin_table_td">
+													<input name="wpsite_post_status_notifications_settings_publish_notify" type="radio" value="admins" <?php echo isset($settings['publish_notify']) && $settings['publish_notify'] == 'admins' ? 'checked' : ''; ?>>
+												</td>
+											</th>
+										</tr>
+
+										<!-- Editors -->
+
+										<tr>
+											<th class="wpsite_admin_table_th">
+												<label><?php _e('Editors only', self::$text_domain); ?></label>
+												<td class="wpsite_admin_table_td">
+													<input name="wpsite_post_status_notifications_settings_publish_notify" type="radio" value="admins" <?php echo isset($settings['publish_notify']) && $settings['publish_notify'] == 'editors' ? 'checked' : ''; ?>>
 												</td>
 											</th>
 										</tr>
@@ -206,7 +247,7 @@
 									</tbody>
 								</table>
 
-								<h3><?php _e('Content and Subjects', self::$text_domain); ?></h3>
+								<h3><?php _e('Custom email subjects and messages', self::$text_domain); ?></h3>
 
 								<em><label><?php _e('Leave blank for defaults.', self::$text_domain); ?></label></em>
 
@@ -217,7 +258,7 @@
 
 										<tr>
 											<th class="wpsite_admin_table_th">
-												<label><?php _e('Email when post is published', self::$text_domain); ?></label><br/>
+												<label><?php _e('Sent when post is published', self::$text_domain); ?></label><br/>
 												<td class="wpsite_admin_table_td">
 													<label><?php _e('Subject', self::$text_domain); ?></label><br/>
 													<input id="wpsite_post_status_notifications_settings_message_subject_published" name="wpsite_post_status_notifications_settings_message_subject_published" type="text" size="50" value="<?php echo esc_attr($settings['message']['subject_published']); ?>"/><br/>
@@ -233,7 +274,7 @@
 
 										<tr>
 											<th class="wpsite_admin_table_th">
-												<label><?php _e('Email sent to contributor when their post is published', self::$text_domain); ?></label><br/>
+												<label><?php _e('Sent to contributor when their post is published', self::$text_domain); ?></label><br/>
 												<td class="wpsite_admin_table_td">
 													<label><?php _e('Subject', self::$text_domain); ?></label><br/>
 													<input id="wpsite_post_status_notifications_settings_message_subject_published_contributor" name="wpsite_post_status_notifications_settings_message_subject_published_contributor" type="text" size="50" value="<?php echo esc_attr($settings['message']['subject_published_contributor']); ?>"/><br/>
@@ -249,7 +290,7 @@
 
 										<tr>
 											<th class="wpsite_admin_table_th">
-												<label><?php _e('Email sent to admin when contributor submits post for review', self::$text_domain); ?></label><br/>
+												<label><?php _e('Sent when post is submitted for review from a contributor', self::$text_domain); ?></label><br/>
 												<td class="wpsite_admin_table_td">
 													<label><?php _e('Subject', self::$text_domain); ?></label><br/>
 													<input id="wpsite_post_status_notifications_settings_message_subject_pending" name="wpsite_post_status_notifications_settings_message_subject_pending" type="text" size="50" value="<?php echo esc_attr($settings['message']['subject_pending']); ?>"/><br/>
@@ -283,20 +324,20 @@
 				</div>
 
 				<div class="mktg-banner">
-					<a target="_blank" href="http://www.wpsite.net/custom-wordpress-development/#utm_source=plugin-config&utm_medium=banner&utm_campaign=custom-development-banner"><img src="<?php echo WPSITE_LIMIT_POSTS_PLUGIN_URL . '/img/ad-custom-development.png' ?>"></a>
+					<a target="_blank" href="http://www.wpsite.net/custom-wordpress-development/#utm_source=plugin-config&utm_medium=banner&utm_campaign=custom-development-banner"><img src="<?php echo WPSITE_POST_STATUS_NOTIFICATION_PLUGIN_URL . '/img/ad-custom-development.png' ?>"></a>
 				</div>
 
 				<div class="mktg-banner">
-					<a target="_blank" href="http://www.wpsite.net/services/#utm_source=plugin-config&utm_medium=banner&utm_campaign=plugin-request-banner"><img src="<?php echo WPSITE_LIMIT_POSTS_PLUGIN_URL . '/img/ad-plugin-request.png' ?>"></a>
+					<a target="_blank" href="http://www.wpsite.net/services/#utm_source=plugin-config&utm_medium=banner&utm_campaign=plugin-request-banner"><img src="<?php echo WPSITE_POST_STATUS_NOTIFICATION_PLUGIN_URL . '/img/ad-plugin-request.png' ?>"></a>
 				</div>
 
 				<div class="mktg-banner">
-					<a target="_blank" href="http://www.wpsite.net/themes/#utm_source=plugin-config&utm_medium=banner&utm_campaign=themes-banner"><img src="<?php echo WPSITE_LIMIT_POSTS_PLUGIN_URL . '/img/ad-themes.png' ?>"></a>
+					<a target="_blank" href="http://www.wpsite.net/themes/#utm_source=plugin-config&utm_medium=banner&utm_campaign=themes-banner"><img src="<?php echo WPSITE_POST_STATUS_NOTIFICATION_PLUGIN_URL . '/img/ad-themes.png' ?>"></a>
 				</div>
 
 <!--
 				<div class="mktg-banner">
-					<a target="_blank" href="http://www.wpsite.net/services/#utm_source=plugin-config&utm_medium=banner&utm_campaign=need-support-banner"><img src="<?php echo WPSITE_LIMIT_POSTS_PLUGIN_URL . '/img/ad-need-support.png' ?>"></a>
+					<a target="_blank" href="http://www.wpsite.net/services/#utm_source=plugin-config&utm_medium=banner&utm_campaign=need-support-banner"><img src="<?php echo WPSITE_POST_STATUS_NOTIFICATION_PLUGIN_URL . '/img/ad-need-support.png' ?>"></a>
 				</div>
 -->
 
