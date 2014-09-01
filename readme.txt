@@ -3,8 +3,8 @@ Contributors: wpsitenet, kjbenk, charliepatel
 Donate link:
 Tags: post status, status, status notification, post notification, email notification, post status notification, notifier, contributors, submit for review, pending status, pending posts, published posts, contributions, post message, article submissions, admin notifications, editor notifications, contributor notification, post email, editorial workflow, edit flow
 Requires at least: 3.8
-Tested up to: 3.9
-Stable tag: 1.1
+Tested up to: 3.9.1
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,10 @@ Similar to all other plugins, follow these instructions:
 2. General Settings Page
 
 == Changelog ==
+
+= 2.0 =
+* Fixed Minor Bug
+* Changed settings page styling
 
 = 1.1 =
 * Custom Email Headers

@@ -3,7 +3,7 @@
 Plugin Name: WPSite Post Status Notifications
 plugin URI: http://www.wpsite.net/plugin/post-status-notifications
 Description: Send post status notifications by email to Administrators and Contributors when posts are submitted for review or published. Great for multi-author sites to improve editorial workflow.
-version: 1.1
+version: 2.0
 Author: WPSITE.net
 Author URI: http://wpsite.net
 License: GPL2
@@ -31,7 +31,7 @@ if (!defined('WPSITE_POST_STATUS_NOTIFICATION_PLUGIN_URL'))
 /* Plugin verison */
 
 if (!defined('WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM'))
-    define('WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM', '1.1.0');
+    define('WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM', '2.0.0');
 
 
 /**
@@ -323,7 +323,7 @@ class WPSitePostStatusNotifications {
 		}
 
 		$wpsite_info = "\r\n\r\nThis was sent by WPsite Post Status Notifications." .  "\r\n" .  "wpsite.net";
-		$just_published_contributor = '"' . $post->post_title . '"' . " was just published!  Check it out, and thanks for the hard work.\r\n";
+		$just_published_contributor = '"' . $post->post_title . '"' . " was just published!  Check it out, and thanks for the hard work." . "\r\n\r\n" . "View it: $url";
 	    $just_published = '"' . $post->post_title . '"' . " was just published!" . "\r\n\r\n"  . "View it: $url";
 
 		// Notifiy Admins that Contributor has writen a post
@@ -388,7 +388,7 @@ class WPSitePostStatusNotifications {
 				if (isset($settings['message']['content_published_contributor']) && $settings['message']['content_published_contributor'] != '') {
 					$message = $settings['message']['content_published_contributor'] . "\r\n\r\n" . $just_published_contributor;
 				} else {
-					$message = $just_published_contributor . $url;
+					$message = $just_published_contributor;
 				}
 
 				$message .= $share_links . $wpsite_info;
@@ -415,7 +415,7 @@ class WPSitePostStatusNotifications {
 					if (isset($settings['message']['content_published']) && $settings['message']['content_published'] != '') {
 						$message = $settings['message']['content_published'] . "\r\n\r\n" . $just_published;
 					} else {
-						$message = $just_published . $url;
+						$message = $just_published;
 					}
 
 			    	$message .= $share_links . $wpsite_info;
@@ -445,7 +445,7 @@ class WPSitePostStatusNotifications {
 					if (isset($settings['message']['content_published']) && $settings['message']['content_published'] != '') {
 						$message = $settings['message']['content_published'] . "\r\n\r\n" . $just_published;
 					} else {
-						$message = $just_published . $url;
+						$message = $just_published;
 					}
 
 			    	$message .= $share_links . $wpsite_info;
@@ -481,7 +481,7 @@ class WPSitePostStatusNotifications {
 						if (isset($settings['message']['content_published_contributor']) && $settings['message']['content_published_contributor'] != '') {
 							$message = $settings['message']['content_published_contributor'] . "\r\n\r\n" . $just_published_contributor;
 						} else {
-							$message = $just_published_contributor . $url;
+							$message = $just_published_contributor;
 						}
 
 				    	$message .= $share_links . $wpsite_info;
@@ -502,7 +502,7 @@ class WPSitePostStatusNotifications {
 					if (isset($settings['message']['content_published']) && $settings['message']['content_published'] != '') {
 						$message = $settings['message']['content_published'] . "\r\n\r\n" . $just_published;
 					} else {
-						$message = $just_published . $url;
+						$message = $just_published;
 					}
 
 			    	$message .= $share_links . $wpsite_info;
