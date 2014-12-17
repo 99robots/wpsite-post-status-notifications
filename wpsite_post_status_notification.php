@@ -3,7 +3,7 @@
 Plugin Name: WPSite Post Status Notifications
 plugin URI: http://www.wpsite.net/plugin/post-status-notifications
 Description: Send post status notifications by email to Administrators and Contributors when posts are submitted for review or published. Great for multi-author sites to improve editorial workflow.
-version: 2.0.1
+version: 2.0.2
 Author: WPSITE.net
 Author URI: http://wpsite.net
 License: GPL2
@@ -31,7 +31,7 @@ if (!defined('WPSITE_POST_STATUS_NOTIFICATION_PLUGIN_URL'))
 /* Plugin verison */
 
 if (!defined('WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM'))
-    define('WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM', '2.0.1');
+    define('WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM', '2.0.2');
 
 
 /**

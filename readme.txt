@@ -3,8 +3,8 @@ Contributors: wpsitenet, kjbenk, charliepatel
 Donate link:
 Tags: post status, status, status notification, post notification, email notification, post status notification, notifier, contributors, submit for review, pending status, pending posts, published posts, contributions, post message, article submissions, admin notifications, editor notifications, contributor notification, post email, editorial workflow, edit flow
 Requires at least: 3.8
-Tested up to: 4.0
-Stable tag: 2.0.1
+Tested up to: 4.1
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -55,6 +55,9 @@ Similar to all other plugins, follow these instructions:
 2. General Settings Page
 
 == Changelog ==
+
+= 2.0.2 =
+* Compatible with WordPress 4.1
 
 = 2.0.1 =
 * Supports WordPress 4.0
