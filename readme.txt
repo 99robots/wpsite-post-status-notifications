@@ -1,18 +1,18 @@
-=== WPsite Post Status Notifications ===
-Contributors: 99robots, wpsitenet, kjbenk, charliepatel
+=== 99 Robots Post Status Notifications ===
+Contributors: 99robots, wpsitenet
 Donate link:
 Tags: post status, status, status notification, post notification, email notification, post status notification, notifier, contributors, submit for review, pending status, pending posts, published posts, contributions, post message, article submissions, admin notifications, editor notifications, contributor notification, post email, editorial workflow, edit flow
 Requires at least: 3.8
 Tested up to: 4.1
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The Post Status Notifications plugin by WPsite.net provides an easy way to ensure Administrators are notified of their Contributors posts submissions.
+The Post Status Notifications plugin by 99 Robots provides an easy way to ensure Administrators are notified of their Contributors posts submissions.
 
 == Description ==
 
-The Post Status Notifications plugin by WPsite.net provides an easy way to ensure Administrators are notified of their Contributors posts submitted for review. Additionally, when an administrator publishes the post, the original author will also be notified via email so that they can see their post live on the site. These email notifications ensure posts are not sitting idle waiting for reviewers who otherwise would have to check WordPress admin manually for posts in the pending review status.
+The Post Status Notifications plugin by 99 Robots provides an easy way to ensure Administrators are notified of their Contributors posts submitted for review. Additionally, when an administrator publishes the post, the original author will also be notified via email so that they can see their post live on the site. These email notifications ensure posts are not sitting idle waiting for reviewers who otherwise would have to check WordPress admin manually for posts in the pending review status.
 
 = Features =
 Get a better editorial workflow by ensuring communication occurs related to articles submitted for review and subsequently published by administrators.
@@ -27,17 +27,17 @@ Get a better editorial workflow by ensuring communication occurs related to arti
 
 This is great plugin for every site that accepts user submitted content, has multiple authors, or site owners running content-heavy websites. Enhance your editorial workflow with proper communication to the relevant parties.
 
-For more details, visit the http://www.wpsite.net for more information.
+For more details, visit the http://www.99robots.com for more information.
 
 == Installation ==
 
-You can install the WPsite Post Status Notifications plugin from your WordPress Dashboard or manually via FTP.
+You can install the 99 Robots Post Status Notifications plugin from your WordPress Dashboard or manually via FTP.
 
 = From WordPress Dashboard =
 Similar to all other plugins, follow these instructions:
 
 * Navigate to 'Plugins -> Add New' from your WordPress dashboard.
-* Search for `WPsite Post Status Notifications` and install it.
+* Search for `99 Robots Post Status Notifications` and install it.
 * Activate the plugin from Plugins menu.
 * Configure the plugin's options from Post Status Notifications tab in your WP Admin.
 
@@ -55,6 +55,9 @@ Similar to all other plugins, follow these instructions:
 2. General Settings Page
 
 == Changelog ==
+
+= 2.0.4 =
+* Re-branded to 99 Robots
 
 = 2.0.3 =
 * Minor Updates

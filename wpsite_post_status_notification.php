@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: WPSite Post Status Notifications
-plugin URI: http://www.wpsite.net/plugin/post-status-notifications
+Plugin Name: 99 Robots Post Status Notifications
+plugin URI: http://www.99robots.com/plugin/post-status-notifications
 Description: Send post status notifications by email to Administrators and Contributors when posts are submitted for review or published. Great for multi-author sites to improve editorial workflow.
-version: 2.0.3
-Author: WPSITE.net
-Author URI: http://wpsite.net
+version: 2.0.4
+Author: 99 Robots
+Author URI: http://ww.99robots.com
 License: GPL2
 */
 
@@ -31,7 +31,7 @@ if (!defined('WPSITE_POST_STATUS_NOTIFICATION_PLUGIN_URL'))
 /* Plugin verison */
 
 if (!defined('WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM'))
-    define('WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM', '2.0.3');
+    define('WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM', '2.0.4');
 
 
 /**
@@ -152,8 +152,8 @@ class WPSitePostStatusNotifications {
 
 	    $settings_page_load = add_submenu_page(
 	    	'options-general.php', 												// parent slug
-	    	__('WPsite Post Status Notifications', self::$text_domain), 						// Page title
-	    	__('WPsite Post Status Notifications', self::$text_domain), 						// Menu name
+	    	__('99 Robots Post Status Notifications', self::$text_domain), 						// Page title
+	    	__('99 Robots Post Status Notifications', self::$text_domain), 						// Menu name
 	    	'manage_options', 											// Capabilities
 	    	self::$settings_page, 										// slug
 	    	array('WPSitePostStatusNotifications', 'wpsite_admin_menu_info_callback')	// Callback function
@@ -322,7 +322,7 @@ class WPSitePostStatusNotifications {
 			}
 		}
 
-		$wpsite_info = "\r\n\r\nThis was sent by WPsite Post Status Notifications." .  "\r\n" .  "wpsite.net";
+		$wpsite_info = "\r\n\r\nThis was sent by 99 Robots Post Status Notifications." .  "\r\n" .  "99robots.com";
 		$just_published_contributor = '"' . $post->post_title . '"' . " was just published!  Check it out, and thanks for the hard work." . "\r\n\r\n" . "View it: $url";
 	    $just_published = '"' . $post->post_title . '"' . " was just published!" . "\r\n\r\n"  . "View it: $url";
 

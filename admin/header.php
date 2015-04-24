@@ -16,7 +16,7 @@
 
 						<div class="head-left">
 							<div class="logowrap">
-								<a href="http://www.wpsite.net" target="_blank"><h1 class="logo">&nbsp;</h1></a>
+								<a href="http://www.99robots.com" target="_blank"><h1 class="logo">&nbsp;</h1></a>
 							</div>
 						</div>
 
@@ -28,8 +28,8 @@
 						</div>
 
 						<div class="head-right">
-							<a class="sqbutton" href="http://www.wpsite.net/plugins?utm_source=plugin-config&amp;utm_medium=headerlink&amp;utm_campaign=top" target="_blank">More Plugins</a>
-							<a class="sqbutton" href="http://www.wpsite.net/themes?utm_source=plugin-config&amp;utm_medium=headerlink&amp;utm_campaign=top" target="_blank">View Themes</a>
+							<a class="sqbutton" href="http://www.99robots.com/plugins?utm_source=plugin-config&amp;utm_medium=headerlink&amp;utm_campaign=top" target="_blank">More Plugins</a>
+							<a class="sqbutton" href="http://www.99robots.com/themes?utm_source=plugin-config&amp;utm_medium=headerlink&amp;utm_campaign=top" target="_blank">View Themes</a>
 						</div>
 
 					</header>
