@@ -3,7 +3,7 @@
 Plugin Name: 99 Robots Post Status Notifications
 plugin URI: http://www.99robots.com/plugin/post-status-notifications
 Description: Send post status notifications by email to Administrators and Contributors when posts are submitted for review or published. Great for multi-author sites to improve editorial workflow.
-version: 2.0.4
+version: 2.0.5
 Author: 99 Robots
 Author URI: http://ww.99robots.com
 License: GPL2
@@ -31,7 +31,7 @@ if (!defined('WPSITE_POST_STATUS_NOTIFICATION_PLUGIN_URL'))
 /* Plugin verison */
 
 if (!defined('WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM'))
-    define('WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM', '2.0.4');
+    define('WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM', '2.0.5');
 
 
 /**
@@ -322,7 +322,6 @@ class WPSitePostStatusNotifications {
 			}
 		}
 
-		$wpsite_info = "\r\n\r\nThis was sent by 99 Robots Post Status Notifications." .  "\r\n" .  "99robots.com";
 		$just_published_contributor = '"' . $post->post_title . '"' . " was just published!  Check it out, and thanks for the hard work." . "\r\n\r\n" . "View it: $url";
 	    $just_published = '"' . $post->post_title . '"' . " was just published!" . "\r\n\r\n"  . "View it: $url";
 
@@ -357,8 +356,6 @@ class WPSitePostStatusNotifications {
 	    	$message .= "Edit the " . $post->post_type . ": $edit_link\r\n";
 	    	$message .= "Preview it: $preview_link";
 
-	    	$message .= $wpsite_info;
-
 			$users = get_users(array(
 				'role'	=> $settings['pending_notify']
 			));
@@ -391,7 +388,7 @@ class WPSitePostStatusNotifications {
 					$message = $just_published_contributor;
 				}
 
-				$message .= $share_links . $wpsite_info;
+				$message .= $share_links;
 
 				$result = wp_mail($username->user_email, $subject, $message, $headers);
 			}
@@ -418,7 +415,7 @@ class WPSitePostStatusNotifications {
 						$message = $just_published;
 					}
 
-			    	$message .= $share_links . $wpsite_info;
+			    	$message .= $share_links;
 
 
 					$users = get_users(array(
@@ -448,7 +445,7 @@ class WPSitePostStatusNotifications {
 						$message = $just_published;
 					}
 
-			    	$message .= $share_links . $wpsite_info;
+			    	$message .= $share_links;
 
 
 					$users = get_users(array(
@@ -484,7 +481,7 @@ class WPSitePostStatusNotifications {
 							$message = $just_published_contributor;
 						}
 
-				    	$message .= $share_links . $wpsite_info;
+				    	$message .= $share_links;
 
 						$result = wp_mail($username->user_email, $subject, $message, $headers);
 
@@ -505,7 +502,7 @@ class WPSitePostStatusNotifications {
 						$message = $just_published;
 					}
 
-			    	$message .= $share_links . $wpsite_info;
+			    	$message .= $share_links;
 
 					$users = get_users(array(
 						'exclude'	=> $exclude_array
