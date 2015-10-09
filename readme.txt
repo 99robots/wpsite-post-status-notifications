@@ -1,10 +1,10 @@
-=== 99 Robots Post Status Notifications ===
-Contributors: 99robots, wpsitenet
+=== Post Status Notifications ===
+Contributors: 99robots
 Donate link:
 Tags: post status, status, status notification, post notification, email notification, post status notification, notifier, contributors, submit for review, pending status, pending posts, published posts, contributions, post message, article submissions, admin notifications, editor notifications, contributor notification, post email, editorial workflow, edit flow
-Requires at least: 3.8
-Tested up to: 4.1
-Stable tag: 2.0.5
+Requires at least: 4.1
+Tested up to: 4.3.1
+Stable tag: 3.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ The Post Status Notifications plugin by 99 Robots provides an easy way to ensure
 
 == Description ==
 
-The Post Status Notifications plugin by 99 Robots provides an easy way to ensure Administrators are notified of their Contributors posts submitted for review. Additionally, when an administrator publishes the post, the original author will also be notified via email so that they can see their post live on the site. These email notifications ensure posts are not sitting idle waiting for reviewers who otherwise would have to check WordPress admin manually for posts in the pending review status.
+The Post Status Notifications plugin by [99 Robots](https://99robots.com) provides an easy way to ensure Administrators are notified of their Contributors posts submitted for review. Additionally, when an administrator publishes the post, the original author will also be notified via email so that they can see their post live on the site. These email notifications ensure posts are not sitting idle waiting for reviewers who otherwise would have to check WordPress admin manually for posts in the pending review status.
 
 = Features =
 Get a better editorial workflow by ensuring communication occurs related to articles submitted for review and subsequently published by administrators.
@@ -55,6 +55,8 @@ Similar to all other plugins, follow these instructions:
 2. General Settings Page
 
 == Changelog ==
+
+= 3.0.0 =
 
 = 2.0.5 =
 * REMOVED: 99robots.com link at the end of all email has been removed
