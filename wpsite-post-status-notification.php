@@ -3,7 +3,7 @@
 Plugin Name: Post Status Notifications
 plugin URI: http://www.99robots.com/plugin/post-status-notifications
 Description: Send post status notifications by email to Administrators and Contributors when posts are submitted for review or published. Great for multi-author sites to improve editorial workflow.
-version: 3.0.0
+version: 3.0.1
 Author: 99 Robots
 Author URI: https://www.99robots.com
 License: GPL2
@@ -31,7 +31,7 @@ if (!defined('WPSITE_POST_STATUS_NOTIFICATION_PLUGIN_URL'))
 /* Plugin verison */
 
 if (!defined('WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM'))
-    define('WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM', '3.0.0');
+    define('WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM', '3.0.1');
 
 
 /**
