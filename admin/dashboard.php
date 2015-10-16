@@ -54,7 +54,7 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><?php _e('Post Was Published', self::$text_domain); ?></label>
 					<div class="col-sm-9">
-						<em class="help-block"><?php _e('Notify these users when a contributor\'s post is published.', self::$text_domain); ?></em>
+						<em class="help-block"><?php _e('Notify these users when a contributor\'s post is published or any other post is published.', self::$text_domain); ?></em>
 
 						<input id="wpsite_post_status_notifications_settings_publish_notify_author" name="wpsite_post_status_notifications_settings_publish_notify" type="radio" value="author" <?php echo isset($settings['publish_notify']) && $settings['publish_notify'] == 'author' ? 'checked="checked"' : ''; ?>><span><?php _e('Contributors', self::$text_domain); ?></span><br />
 
@@ -142,12 +142,12 @@
 					</div>
 				</div>
 
-				<!-- Email when post is published -->
+				<!-- Email when a post is published -->
 
 				<div class="form-group">
-					<label class="col-sm-3 control-label"><?php _e('Post Published', self::$text_domain); ?></label>
+					<label class="col-sm-3 control-label"><?php _e('Post Published', self::$text_domain); ?><br /><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#post-published"><?php _e('Example Email', self::$text_domain); ?></button></label>
 					<div class="col-sm-9">
-						<p class="form-control-static"><em><?php _e('Sent to users when a post is published.', self::$text_domain); ?></em></p>
+						<p class="form-control-static"><em><?php _e('Sent to users when a post has been published.  If the post being published was written by a contributor then they will receive a custom email as seen below.', self::$text_domain); ?></em></p>
 						<label><?php _e('Subject', self::$text_domain); ?></label><br/>
 						<input id="wpsite_post_status_notifications_settings_message_subject_published" name="wpsite_post_status_notifications_settings_message_subject_published" type="text" class="form-control" value="<?php echo esc_attr($settings['message']['subject_published']); ?>"/><br/>
 
@@ -159,9 +159,9 @@
 				<!-- Email sent to contributor when their post is published -->
 
 				<div class="form-group">
-					<label class="col-sm-3 control-label"><?php _e('Contributor Post Published', self::$text_domain); ?></label>
+					<label class="col-sm-3 control-label"><?php _e('Contributor\'s Post Published', self::$text_domain); ?><br /><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#post-published-contributor"><?php _e('Example Email', self::$text_domain); ?></button></label>
 					<div class="col-sm-9">
-						<p class="form-control-static"><em><?php _e('Sent to users when a contributor\'s post is published.', self::$text_domain); ?></em></p>
+						<p class="form-control-static"><em><?php _e('Sent to the contributor when their post is published.', self::$text_domain); ?></em></p>
 						<label><?php _e('Subject', self::$text_domain); ?></label><br/>
 						<input id="wpsite_post_status_notifications_settings_message_subject_published_contributor" name="wpsite_post_status_notifications_settings_message_subject_published_contributor" type="text" class="form-control" value="<?php echo esc_attr($settings['message']['subject_published_contributor']); ?>"/><br/>
 
@@ -170,10 +170,26 @@
 					</div>
 				</div>
 
+				<!-- Email when post is published -->
+
+<!--
+				<div class="form-group">
+					<label class="col-sm-3 control-label"><?php _e('Post Published', self::$text_domain); ?></label>
+					<div class="col-sm-9">
+						<p class="form-control-static"><em><?php _e('Sent to users when a post is published.', self::$text_domain); ?></em></p>
+						<label><?php _e('Subject', self::$text_domain); ?></label><br/>
+						<input id="wpsite_post_status_notifications_settings_message_subject_published_global" name="wpsite_post_status_notifications_settings_message_subject_published_global" type="text" class="form-control" value="<?php echo esc_attr($settings['message']['subject_published_global']); ?>"/><br/>
+
+						<label><?php _e('Content', self::$text_domain); ?></label><br/>
+						<textarea rows="10" cols="50" class="form-control" id="wpsite_post_status_notifications_settings_message_content_published_global" name="wpsite_post_status_notifications_settings_message_content_published_global"><?php echo esc_attr($settings['message']['content_published_global']); ?></textarea>
+					</div>
+				</div>
+-->
+
 				<!-- Email sent to admin when contributor submits post for review -->
 
 				<div class="form-group">
-					<label class="col-sm-3 control-label"><?php _e('Post Submitted for Review', self::$text_domain); ?></label>
+					<label class="col-sm-3 control-label"><?php _e('Post Submitted for Review', self::$text_domain); ?><br /><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#submit-for-review"><?php _e('Example Email', self::$text_domain); ?></button></label>
 					<div class="col-sm-9">
 						<p class="form-control-static"><em><?php _e('Sent to admins or editors when a contributor submits a post for review.', self::$text_domain); ?></em></p>
 						<label><?php _e('Subject', self::$text_domain); ?></label><br/>
@@ -191,6 +207,57 @@
 				</p>
 
 			</form>
+
+			<div class="modal fade" id="post-published" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document" style="margin-top: 10vh;width: 800px;max-width: 100%;">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title"><?php _e('Example Email', self::$text_domain); ?></h4>
+						</div>
+						<div class="modal-body">
+							<img style="width: 100%;" src="<?php echo WPSITE_POST_STATUS_NOTIFICATION_PLUGIN_URL . '/img/post-published.png'; ?>"/>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal"><?php _e('Close', self::$text_domain); ?></button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade" id="post-published-contributor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document" style="margin-top: 10vh;width: 800px;max-width: 100%;">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title"><?php _e('Example Email', self::$text_domain); ?></h4>
+						</div>
+						<div class="modal-body">
+							<img style="width: 100%;" src="<?php echo WPSITE_POST_STATUS_NOTIFICATION_PLUGIN_URL . '/img/post-published-contributor.png'; ?>"/>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal"><?php _e('Close', self::$text_domain); ?></button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade" id="submit-for-review" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document" style="margin-top: 10vh;width: 800px;max-width: 100%;">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title"><?php _e('Example Email', self::$text_domain); ?></h4>
+						</div>
+						<div class="modal-body">
+							<img style="width: 100%;" src="<?php echo WPSITE_POST_STATUS_NOTIFICATION_PLUGIN_URL . '/img/please-moderate.png'; ?>"/>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal"><?php _e('Close', self::$text_domain); ?></button>
+						</div>
+					</div>
+				</div>
+			</div>
 
 		</div>
 
