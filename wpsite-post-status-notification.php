@@ -352,15 +352,15 @@ class WPSitePostStatusNotifications {
 		}
 
 		$settings['message'] = array(
-			'cc_email'						=> $settings['message']['cc_email'] != '' ? $settings['message']['cc_email'] : $default_data['message']['cc_email'],
-			'bcc_email'						=> $settings['message']['bcc_email'] != '' ? $settings['message']['bcc_email'] : $default_data['message']['bcc_email'],
-			'from_email'					=> $settings['message']['from_email'] != '' ? $settings['message']['from_email'] : $default_data['message']['from_email'],
-			'subject_published'				=> $settings['message']['subject_published'] != '' ? $settings['message']['subject_published'] : $default_data['message']['subject_published'],
-			'subject_published_contributor'	=> $settings['message']['subject_published_contributor'] != '' ? $settings['message']['subject_published_contributor'] : $default_data['message']['subject_published_contributor'],
-			'subject_pending'				=> $settings['message']['subject_pending'] != '' ? $settings['message']['subject_pending'] : $default_data['message']['subject_pending'],
-			'content_published'				=> $settings['message']['content_published'] != '' ? $settings['message']['content_published'] : $default_data['message']['content_published'],
-			'content_published_contributor'	=> $settings['message']['content_published_contributor'] != '' ? $settings['message']['content_published_contributor'] : $default_data['message']['content_published_contributor'],
-			'content_pending'				=> $settings['message']['content_pending'] != '' ? $settings['message']['content_pending'] : $default_data['message']['content_pending'],
+			'cc_email'						=> $settings['message']['cc_email'],
+			'bcc_email'						=> $settings['message']['bcc_email'],
+			'from_email'					=> $settings['message']['from_email'],
+			'subject_published'				=> $settings['message']['subject_published'],
+			'subject_published_contributor'	=> $settings['message']['subject_published_contributor'],
+			'subject_pending'				=> $settings['message']['subject_pending'],
+			'content_published'				=> $settings['message']['content_published'],
+			'content_published_contributor'	=> $settings['message']['content_published_contributor'],
+			'content_pending'				=> $settings['message']['content_pending'],
 			'share_links'	=> array(
 				'twitter'	=> $settings['message']['share_links']['twitter'],
 				'facebook'	=> $settings['message']['share_links']['facebook'],
