@@ -2,9 +2,9 @@
 Contributors: 99robots, kjbenk, charliepatel
 Donate link:
 Tags: post status, status, status notification, post notification, email notification, post status notification, notifier, contributors, submit for review, pending status, pending posts, published posts, contributions, post message, article submissions, admin notifications, editor notifications, contributor notification, post email, editorial workflow, edit flow
-Requires at least: 4.1
-Tested up to: 4.3.1
-Stable tag: 3.0.2
+Requires at least: 4.5
+Tested up to: 4.6.0
+Stable tag: 3.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,11 +62,14 @@ Similar to all other plugins, follow these instructions:
 
 == Changelog ==
 
+= 3.0.3 = 2016-5-5
+* FIXED: Improved code quality and checked for non set variables
+
 = 3.0.2 = 2015-10-19
 * FIXED: Fixed bug with the activation process
 
 = 3.0.1 = 2015-10-16
-* UPDATED: Readme description 
+* UPDATED: Readme description
 
 = 3.0.0 = 2015-10-16
 * ADDED: Dynamic fields are not included in the custom subjects and message of the emails
