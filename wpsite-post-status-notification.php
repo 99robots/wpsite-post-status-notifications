@@ -26,7 +26,7 @@ class WPSite_Post_Status_Notifications {
 	 * WPSite_Post_Status_Notifications version.
 	 * @var string
 	 */
-	public $version = '3.0.4';
+	public $version = '3.1.0';
 
 	/**
 	 * The single instance of the class.
