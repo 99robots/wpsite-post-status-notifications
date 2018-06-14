@@ -3,7 +3,7 @@
  * Plugin Name:		Post Status Notifications
  * Plugin URI:		http://www.99robots.com/plugin/post-status-notifications
  * Description:		Send post status notifications by email to Administrators and Contributors when posts are submitted for review or published. Great for multi-author sites to improve editorial workflow.
- * Version:			3.0.4
+ * Version:			3.1.0
  * Author:			99 Robots
  * Author URI:		https://www.99robots.com
  * License:			GPL2
@@ -125,6 +125,7 @@ class WPSite_Post_Status_Notifications {
 			'pending_notify'	=> 'admin',
 			'post_types'		=> array( 'post' ),
 			'message'			=> array(
+				'from_name'						=> get_bloginfo('name'),
 				'cc_email'						=> '',
 				'bcc_email'						=> '',
 				'from_email'					=> 'wordpress@' . $_SERVER['HTTP_HOST'],
@@ -304,6 +305,7 @@ class WPSite_Post_Status_Notifications {
 				'pending_notify'	=> isset( $_POST['wpsite_post_status_notifications_settings_pending_notify'] ) ? $_POST['wpsite_post_status_notifications_settings_pending_notify'] : '',
 				'post_types'		=> $post_types_array,
 				'message'			=> array(
+					'from_name'		=> isset( $_POST['wpsite_post_status_notifications_settings_message_from_name'] ) ? stripcslashes( sanitize_text_field( $_POST['wpsite_post_status_notifications_settings_message_from_name'] ) ) : $default_data['message']['from_name'],
 					'cc_email'		=> isset( $_POST['wpsite_post_status_notifications_settings_message_cc_email'] ) ? stripcslashes( sanitize_text_field( $_POST['wpsite_post_status_notifications_settings_message_cc_email'] ) ) : $default_data['message']['cc_email'],
 					'bcc_email'		=> isset( $_POST['wpsite_post_status_notifications_settings_message_bcc_email'] ) ? stripcslashes( sanitize_text_field( $_POST['wpsite_post_status_notifications_settings_message_bcc_email'] ) ) : $default_data['message']['bcc_email'],
 					'from_email'	=> isset( $_POST['wpsite_post_status_notifications_settings_message_from_email'] ) ? stripcslashes( sanitize_text_field( $_POST['wpsite_post_status_notifications_settings_message_from_email'] ) ) : $default_data['message']['from_email'],
@@ -325,6 +327,7 @@ class WPSite_Post_Status_Notifications {
 			);
 
 			$settings['message'] = array(
+				'from_name'						=> '' !== $settings['message']['from_name'] ? $settings['message']['from_name'] : $default_data['message']['from_name'],
 				'cc_email'						=> '' !== $settings['message']['cc_email'] ? $settings['message']['cc_email'] : $default_data['message']['cc_email'],
 				'bcc_email'						=> '' !== $settings['message']['bcc_email'] ? $settings['message']['bcc_email'] : $default_data['message']['bcc_email'],
 				'from_email'					=> '' !== $settings['message']['from_email'] ? $settings['message']['from_email'] : $default_data['message']['from_email'],
@@ -367,6 +370,7 @@ class WPSite_Post_Status_Notifications {
 		}
 
 		$settings['message'] = array(
+			'from_name' 				=> '' !== $settings['message']['from_name'] ? $settings['message']['from_name'] : $default_data['message']['from_name'],
 			'cc_email'          => '' !== $settings['message']['cc_email'] ? $settings['message']['cc_email'] : $default_data['message']['cc_email'],
 			'bcc_email'         => '' !== $settings['message']['bcc_email'] ? $settings['message']['bcc_email'] : $default_data['message']['bcc_email'],
 			'from_email'        => '' !== $settings['message']['from_email'] ? $settings['message']['from_email'] : $default_data['message']['from_email'],
@@ -392,8 +396,12 @@ class WPSite_Post_Status_Notifications {
 		// Set all headers
 		$headers = array();
 
+		if ( isset( $settings['message']['from_name'] ) && '' !== $settings['message']['from_name'] ) {
+			$fromname =  $settings['message']['from_name'];
+		}
+
 		if ( isset( $settings['message']['from_email'] ) && '' !== $settings['message']['from_email'] ) {
-			$headers[] = 'From: ' . $settings['message']['from_email'] . "\r\n";
+			$headers[] = 'From: ' .$fromname .' <'. $settings['message']['from_email'] . ">\r\n";
 		}
 
 		if ( isset( $settings['message']['cc_email'] ) && '' !== $settings['message']['cc_email'] ) {
@@ -435,7 +443,6 @@ class WPSite_Post_Status_Notifications {
 				$share_links .= 'LinkedIn: ' . esc_url( self::$linkedin_share_link . $url ) . "\r\n";
 			}
 		}
-
 		// Notifiy Admins that Contributor has writen a post
 	    if ( in_array( $post->post_type, $settings['post_types'] ) && 'pending' === $new_status && user_can( $post->post_author, 'edit_posts' ) && ! user_can( $post->post_author, 'publish_posts' ) ) {
 

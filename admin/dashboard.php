@@ -1,5 +1,4 @@
 <div class="nnr-wrap">
-
 	<?php require_once( 'header.php' ) ?>
 
 	<div class="nnr-container">
@@ -76,6 +75,8 @@
 				<div class="form-group">
 					<label class="col-sm-3 control-label"><?php esc_html_e( 'From', 'wpsite-post-status-notification' ) ?></label>
 					<div class="col-sm-9">
+						<input id="wpsite_post_status_notifications_settings_message_from_name" name="wpsite_post_status_notifications_settings_message_from_name" type="text" class="form-control" value="<?php echo ( isset( $settings['message']['from_name'] ) ? esc_attr( $settings['message']['from_name'] ) : get_bloginfo('name')); ?>" placeholder="<?php esc_html_e( 'My Website Name or My Company Name' ) ?>">
+						<em class="help-block"><?php esc_html_e( 'The From email address for all email notifications.  Please enter in emails separated by commas.', 'wpsite-post-status-notification' ) ?></em>
 						<input id="wpsite_post_status_notifications_settings_message_from_email" name="wpsite_post_status_notifications_settings_message_from_email" type="text" class="form-control" value="<?php echo ( isset( $settings['message']['from_email'] ) ? esc_attr( $settings['message']['from_email'] ) : 'wordpress@' . get_site_url()); ?>" placeholder="<?php esc_html_e( 'email@example.com or email@example.com,another@example.com', 'wpsite-post-status-notification' ) ?>">
 						<em class="help-block"><?php esc_html_e( 'The From email address for all email notifications.  Please enter in emails separated by commas.', 'wpsite-post-status-notification' ) ?></em>
 					</div>
