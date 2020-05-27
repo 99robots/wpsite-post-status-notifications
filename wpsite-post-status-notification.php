@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name:		Post Status Notifications
- * Plugin URI:		http://www.99robots.com/plugin/post-status-notifications
+ * Plugin URI:		http://www.draftpress.com/plugin/post-status-notifications
  * Description:		Send post status notifications by email to Administrators and Contributors when posts are submitted for review or published. Great for multi-author sites to improve editorial workflow.
- * Version:			3.1.2
- * Author:			99 Robots
- * Author URI:		https://www.99robots.com
+ * Version:		3.1.3
+ * Author:		99 Robots
+ * Author URI:		https://www.draftpress.com
  * License:			GPL2
  */
 
@@ -26,7 +26,7 @@ class WPSite_Post_Status_Notifications {
 	 * WPSite_Post_Status_Notifications version.
 	 * @var string
 	 */
-	public $version = '3.1.2';
+	public $version = '3.1.3';
 
 	/**
 	 * The single instance of the class.
@@ -60,13 +60,13 @@ class WPSite_Post_Status_Notifications {
 	/**
 	 * web_page
 	 *
-	 * (default value: 'http://www.99robots.com/plugin/post-status-notifications')
+	 * (default value: 'http://www.draftpress.com/plugin/post-status-notifications')
 	 *
 	 * @var string
 	 * @access private
 	 * @static
 	 */
-	private static $web_page = 'http://www.99robots.com/plugin/post-status-notifications';
+	private static $web_page = 'http://www.draftpress.com/plugin/post-status-notifications';
 
 	/**
 	 * facebook_share_link

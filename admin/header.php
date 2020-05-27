@@ -9,7 +9,7 @@
 		<span class="nnr-product-version"><?php echo wpsite_psn()->get_version() ?></span>
 	</div>
 
-	<a href="http://99robots.com/products" target="_blank">
+	<a href="http://draftpress.com/products" target="_blank">
 		<button class="nnr-header-button pull-right"><?php esc_html_e( 'More Products', 'wpsite-post-status-notification' ) ?></button>
 	</a>
 
