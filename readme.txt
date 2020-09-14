@@ -1,10 +1,10 @@
 === Post Status Notifications ===
-Contributors: 99robots, charliepatel, draftpress
+Contributors: 99robots, charliepatel, DraftPress
 Donate link:
 Tags: post status, status, status notification, post notification, email notification, post status notification, notifier, contributors, submit for review, pending status, pending posts, published posts, contributions, post message, article submissions, admin notifications, editor notifications, contributor notification, post email, editorial workflow, edit flow
 Requires at least: 4.5
 Tested up to: 5.5.1
-Stable tag: 3.1.4
+Stable tag: 3.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,7 +32,7 @@ Get a better editorial workflow by improving communication related to articles s
 
 This is great plugin for every site that accepts user submitted content, has multiple authors, or site owners running content-heavy websites. Enhance your editorial workflow with proper communication.
 
-For more details, visit the <a href=“https://draftpress.com/docs/post-status-notifications/?utm_source=wprepo&utm_medium=post-status-notifications&utm_campaign=desc�?>99 Robots documentation</a>.
+For more details, visit the <a href=“https://draftpress.com/docs/post-status-notifications/?utm_source=wprepo&utm_medium=post-status-notifications&utm_campaign=desc��?>99 Robots documentation</a>.
 
 Also please check out our other [plugins](https://draftpress.com/products/?utm_source=wprepo&utm_medium=post-status-notifications&utm_campaign=desc) :)
 
@@ -61,6 +61,8 @@ Similar to all other plugins, follow these instructions:
 1. Sample Email by Post Status Notification Plugin
 
 == Changelog ==
+= 3.1.5 = 2020-09-14
+* Updated: Email notifications for All Posts Published
 
 = 3.1.4 = 2020-09-14
 * Made compatible with WordPress 5.5.1

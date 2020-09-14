@@ -3,7 +3,7 @@
  * Plugin Name:		Post Status Notifications
  * Plugin URI:		http://www.draftpress.com/plugin/post-status-notifications
  * Description:		Send post status notifications by email to Administrators and Contributors when posts are submitted for review or published. Great for multi-author sites to improve editorial workflow.
- * Version:		3.1.4
+ * Version:		3.1.5
  * Author:		99 Robots
  * Author URI:		https://www.draftpress.com
  * License:			GPL2
@@ -13,7 +13,6 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-
 /**
  *  WPSite_Post_Status_Notifications main class
  *
@@ -26,7 +25,7 @@ class WPSite_Post_Status_Notifications {
 	 * WPSite_Post_Status_Notifications version.
 	 * @var string
 	 */
-	public $version = '3.1.4';
+	public $version = '3.1.5';
 
 	/**
 	 * The single instance of the class.
@@ -489,6 +488,18 @@ class WPSite_Post_Status_Notifications {
 				// Notify All Admins
 				if ( 'admins' === $settings['publish_notify'] && 'pending' === $old_status ) {
 
+					$subject = $this->parse_tags( $post, get_userdata( $post->post_author ), $settings['message']['subject_published_contributor'] );
+					$message = $this->parse_tags( $post, get_userdata( $post->post_author ), $settings['message']['content_published_contributor'] );
+			    	$message .= $share_links;
+
+					$users = get_users( array( 'role' => 'administrator' ) );
+
+					foreach ( $users as $user ) {
+						$result = wp_mail( $user->user_email, $subject, $message, $headers );
+					}
+				}
+				if ( 'admins' === $settings['publish_notify'] && 'pending' !== $old_status ) {
+
 					$subject = $this->parse_tags( $post, get_userdata( $post->post_author ), $settings['message']['subject_published'] );
 					$message = $this->parse_tags( $post, get_userdata( $post->post_author ), $settings['message']['content_published'] );
 			    	$message .= $share_links;
@@ -499,6 +510,7 @@ class WPSite_Post_Status_Notifications {
 						$result = wp_mail( $user->user_email, $subject, $message, $headers );
 					}
 				}
+
 
 				// Notify All Editors
 				if ( 'editors' === $settings['publish_notify'] && ( 'pending' === $old_status || $old_status != $new_status ) ) {
