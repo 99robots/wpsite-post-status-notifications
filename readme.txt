@@ -3,7 +3,7 @@ Contributors: 99robots, charliepatel, DraftPress
 Donate link:
 Tags: post status, status, status notification, post notification, email notification, post status notification, notifier, contributors, submit for review, pending status, pending posts, published posts, contributions, post message, article submissions, admin notifications, editor notifications, contributor notification, post email, editorial workflow, edit flow
 Requires at least: 4.5
-Tested up to: 5.7.1
+Tested up to: 5.7.2
 Stable tag: 3.1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -62,8 +62,8 @@ Similar to all other plugins, follow these instructions:
 
 == Changelog ==
 
-= 3.1.7 = 2021-04-22
-* Made compatible with WordPress 5.7.1
+= 3.1.7 = 2021-05-14
+* Made compatible with WordPress 5.7.2
 
 = 3.1.6 = 2020-12-29
 * Made compatible with WordPress 5.6
