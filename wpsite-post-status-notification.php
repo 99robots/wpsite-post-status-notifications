@@ -1,9 +1,10 @@
 <?php
+
 /**
  * Plugin Name:  Post Status Notifications
  * Plugin URI:   http://www.draftpress.com/products
  * Description:  Send post status notifications by email to Administrators and Contributors when posts are submitted for review or published. Great for multi-author sites to improve editorial workflow.
- * Version:      3.1.8
+ * Version:      3.1.9
  * Author:       DraftPress
  * Author URI:   https://www.draftpress.com
  * License:      GPL2
@@ -26,7 +27,7 @@ class WPSite_Post_Status_Notifications
      * WPSite_Post_Status_Notifications version.
      * @var string
      */
-    public $version = '3.1.8';
+    public $version = '3.1.9';
 
     /**
      * The single instance of the class.
@@ -187,7 +188,6 @@ class WPSite_Post_Status_Notifications
      */
     private function __construct()
     {
-
     }
 
     /**
