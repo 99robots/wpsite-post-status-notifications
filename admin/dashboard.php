@@ -32,8 +32,6 @@
 
 						<input id="wpsite_post_status_notifications_settings_message_share_links_facebook" name="wpsite_post_status_notifications_settings_message_share_links_facebook" type="checkbox" value="users" <?php echo isset( $settings['message']['share_links']['facebook'] ) && $settings['message']['share_links']['facebook'] ? 'checked="checked"' : ''; ?>><span><?php esc_html_e( 'Facebook', 'wpsite-post-status-notification' ) ?></span><br />
 
-						<input id="wpsite_post_status_notifications_settings_message_share_links_google" name="wpsite_post_status_notifications_settings_message_share_links_google" type="checkbox" value="users" <?php echo isset( $settings['message']['share_links']['google'] ) && $settings['message']['share_links']['google'] ? 'checked="checked"' : ''; ?>><span><?php esc_html_e( 'Google+', 'wpsite-post-status-notification' ) ?></span><br />
-
 						<input id="wpsite_post_status_notifications_settings_message_share_links_linkedin" name="wpsite_post_status_notifications_settings_message_share_links_linkedin" type="checkbox" value="users" <?php echo isset( $settings['message']['share_links']['linkedin'] ) && $settings['message']['share_links']['linkedin'] ? 'checked="checked"' : ''; ?>><span><?php esc_html_e( 'LinkedIn', 'wpsite-post-status-notification' ) ?></span><br />
 					</div>
 				</div>
@@ -47,6 +45,7 @@
 
 						<input name="wpsite_post_status_notifications_settings_pending_notify" type="radio" value="editor" <?php echo isset( $settings['pending_notify'] ) && 'editor' === $settings['pending_notify'] ? 'checked' : ''; ?>><span><?php esc_html_e( 'Editors', 'wpsite-post-status-notification' ) ?></span><br />
 
+                        <input name="wpsite_post_status_notifications_settings_pending_notify" type="radio" value="both" <?php echo isset( $settings['pending_notify'] ) && 'both' === $settings['pending_notify'] ? 'checked' : ''; ?>><span><?php esc_html_e( 'Both Admins and Editors', 'wpsite-post-status-notification' ) ?></span><br />
 					</div>
 				</div>
 
