@@ -143,7 +143,7 @@ class WPSite_Post_Status_Notifications
      */
     public function __clone()
     {
-        wc_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wpsite-post-status-notification' ), $this->version );
+        wc_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wpsite-post-status-notifications' ), $this->version );
     }
 
     /**
@@ -151,7 +151,7 @@ class WPSite_Post_Status_Notifications
      */
     public function __wakeup()
     {
-        wc_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wpsite-post-status-notification' ), $this->version );
+        wc_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'wpsite-post-status-notifications' ), $this->version );
     }
 
     /**
@@ -205,15 +205,15 @@ class WPSite_Post_Status_Notifications
     public function load_plugin_textdomain()
     {
 
-        $locale = apply_filters( 'plugin_locale', get_locale(), 'wpsite-post-status-notification' );
+        $locale = apply_filters( 'plugin_locale', get_locale(), 'wpsite-post-status-notifications' );
 
         load_textdomain(
-            'wpsite-post-status-notification',
-            WP_LANG_DIR . '/wpsite-post-status-notification/wpsite-post-status-notification-' . $locale . '.mo'
+            'wpsite-post-status-notifications',
+            WP_LANG_DIR . '/wpsite-post-status-notifications/wpsite-post-status-notifications-' . $locale . '.mo'
         );
 
         load_plugin_textdomain(
-            'wpsite-post-status-notification',
+            'wpsite-post-status-notifications',
             false,
             $this->plugin_dir() . '/languages/'
         );
@@ -227,7 +227,7 @@ class WPSite_Post_Status_Notifications
     public function plugin_links( $links )
     {
 
-        $settings_link = '<a href="options-general.php?page=' . self::$settings_page . '">Settings</a>';
+        $settings_link = '<a href="options-general.php?page=' . self::$settings_page . '">' . esc_html__( 'Settings', 'wpsite-post-status-notifications' ) . '</a>';
         array_unshift( $links, $settings_link );
 
         return $links;
@@ -245,8 +245,8 @@ class WPSite_Post_Status_Notifications
 
         $settings_page_load = add_submenu_page(
             'options-general.php',
-            esc_html__( 'Post Status Notifications', 'wpsite-post-status-notification' ),
-            esc_html__( 'Post Status Notifications', 'wpsite-post-status-notification' ),
+            esc_html_x( 'Post Status Notifications', 'Menu Item and Page Title', 'wpsite-post-status-notifications' ),
+            esc_html_x( 'Post Status Notifications', 'Menu Item and Page Title', 'wpsite-post-status-notifications' ),
             'manage_options',
             self::$settings_page,
             array( $this, 'page_settings' )
