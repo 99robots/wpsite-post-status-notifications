@@ -209,7 +209,7 @@ class WPSite_Post_Status_Notifications
 
         load_textdomain(
             'wpsite-post-status-notifications',
-            WP_LANG_DIR . '/wpsite-post-status-notification/wpsite-post-status-notification-' . $locale . '.mo'
+            WP_LANG_DIR . '/wpsite-post-status-notifications/wpsite-post-status-notifications-' . $locale . '.mo'
         );
 
         load_plugin_textdomain(
@@ -227,7 +227,7 @@ class WPSite_Post_Status_Notifications
     public function plugin_links( $links )
     {
 
-        $settings_link = '<a href="options-general.php?page=' . self::$settings_page . '">Settings</a>';
+        $settings_link = '<a href="options-general.php?page=' . self::$settings_page . '">' . esc_html__( 'Settings', 'wpsite-post-status-notifications' ) . '</a>';
         array_unshift( $links, $settings_link );
 
         return $links;
