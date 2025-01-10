@@ -4,8 +4,8 @@ Donate link:
 Tags: post status, status, status notification, post notification, email notification, post status notification, notifier, contributors, submit for review, pending status, pending posts, published posts, contributions, post message, article submissions, admin notifications, editor notifications, contributor notification, post email, editorial workflow, edit flow
 Requires at least: 4.9
 Requires PHP: 5.6.20
-Tested up to: 6.3
-Stable tag: 3.2.0
+Tested up to: 6.7.1
+Stable tag: 3.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,9 @@ Similar to all other plugins, follow these instructions:
 1. Sample Email by Post Status Notification Plugin
 
 == Changelog ==
+= 3.2.1 = 2025-01-10
+* Made compatible with WordPress 6.7.1
+
 = 3.2.0 = 2023-08-21
 * Made compatible with WordPress 6.3
 * Added: Ability to send notifications to both admins and editors when a contributor submits a post for review

@@ -1,8 +1,16 @@
+<?php
+/**
+ * Admin Sidebar Page
+ *
+ * @package WPSite_Post_Status_Notifications
+ */
+
+?>
 <div class="nnr-sidebar">
 
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title"><?php esc_html_e( 'Signup now to get notified of plugin updates, awesome themes, and more. Over 10,000+ already have:', 'wpsite-post-status-notification' ) ?></h3>
+			<h3 class="panel-title"><?php esc_html_e( 'Signup now to get notified of plugin updates, awesome themes, and more. Over 10,000+ already have:', 'wpsite-post-status-notification' ); ?></h3>
 		</div>
 		<div class="panel-body">
 			<!-- Begin MailChimp Signup Form -->
@@ -20,7 +28,7 @@
 			<form action="//wpsite.us5.list-manage.com/subscribe/post?u=82c2341134bbdc37714642adb&amp;id=642b18616e" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate style="padding-left: 0;">
 				<div id="mc_embed_signup_scroll">
 					<div style="margin-bottom: 20px;">
-						<input type="email" value="" name="EMAIL" class="required email form-control" id="mce-EMAIL" placeholder="<?php esc_html_e( 'Email Address', 'wpsite-post-status-notification' ) ?>">
+						<input type="email" value="" name="EMAIL" class="required email form-control" id="mce-EMAIL" placeholder="<?php esc_html_e( 'Email Address', 'wpsite-post-status-notification' ); ?>">
 					</div>
 					<div id="mce-responses" class="clear">
 						<div class="response" id="mce-error-response" style="display:none"></div>
@@ -38,22 +46,22 @@
 
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title"><?php esc_html_e( 'Must-Read Articles', 'wpsite-post-status-notification' ) ?></h3>
+			<h3 class="panel-title"><?php esc_html_e( 'Must-Read Articles', 'wpsite-post-status-notification' ); ?></h3>
 		</div>
 		<div class="panel-body">
 			<div class="wpsite_feed">
-				<script src="http://feeds.feedburner.com/99robots?format=sigpro" type="text/javascript" ></script><noscript><p><?php esc_html_e( 'Subscribe to 99 Robots Feed:', 'wpsite-post-status-notification' ) ?> <a href="http://feeds.feedburner.com/99robots"></a><br/><?php esc_html_e( 'Powered by FeedBurner', 'wpsite-post-status-notification' ) ?></p> </noscript>
+				<script src="http://feeds.feedburner.com/99robots?format=sigpro" type="text/javascript" ></script><noscript><p><?php esc_html_e( 'Subscribe to 99 Robots Feed:', 'wpsite-post-status-notification' ); ?> <a href="http://feeds.feedburner.com/99robots"></a><br/><?php esc_html_e( 'Powered by FeedBurner', 'wpsite-post-status-notification' ); ?></p> </noscript>
 			</div>
 		</div>
 	</div>
 
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title"><?php esc_html_e( 'Need a Plugin or Theme Developed?', 'wpsite-post-status-notification' ) ?></h3>
+			<h3 class="panel-title"><?php esc_html_e( 'Need a Plugin or Theme Developed?', 'wpsite-post-status-notification' ); ?></h3>
 		</div>
 		<div class="panel-body">
 			<a class="nnr-sidebar-image-link" href="https://draftpress.com/contact?utm_medium=sidebar&utm_campaign=plugin-request-banner" target="_blank">
-				<img class="nnr-sidebar-image" src="<?php echo wpsite_psn()->plugin_url() . 'img/ad-plugin-request.png'; ?>">
+				<img class="nnr-sidebar-image" src="<?php echo esc_url( WPSITE_POST_STATUS_NOTIFICATION_PLUGIN_URL . '/img/ad-plugin-request.png' ); ?>"/>
 			</a>
 		</div>
 	</div>
