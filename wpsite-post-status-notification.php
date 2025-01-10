@@ -661,6 +661,5 @@ class WPSite_Post_Status_Notifications {
 
 		return $this->plugin_url;
 	}
-
 }
 new WPSite_Post_Status_Notifications();

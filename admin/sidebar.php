@@ -10,7 +10,7 @@
 
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title"><?php esc_html_e( 'Signup now to get notified of plugin updates, awesome themes, and more. Over 10,000+ already have:', 'wpsite-post-status-notification' ); ?></h3>
+			<h3 class="panel-title"><?php esc_html_e( 'Subscribe to get notified of new plugins, WordPress industry news, and curated tips. Over 11,000+ already have:', 'wpsite-post-status-notification' ); ?></h3>
 		</div>
 		<div class="panel-body">
 			<!-- Begin MailChimp Signup Form -->
