@@ -221,6 +221,7 @@ class WPSite_Post_Status_Notifications {
 
 			add_action( 'transition_post_status', array( $this, 'wpsite_send_email' ), 10, 3 );
 			add_action( 'admin_menu', array( $this, 'register_pages' ) );
+			
 		}
 	}
 
@@ -389,6 +390,7 @@ class WPSite_Post_Status_Notifications {
 	 */
 	public function wpsite_send_email( $new_status, $old_status, $post ) {
 
+		// Get settings.
 		$settings = get_option( 'wpsite_post_status_notifications_settings' );
 
 		// Default values.
@@ -467,6 +469,7 @@ class WPSite_Post_Status_Notifications {
 				$share_links .= 'LinkedIn: ' . esc_url( self::$linkedin_share_link . $url ) . "\r\n";
 			}
 		}
+
 		// Notifiy Admins that Contributor has writen a post.
 		if ( in_array( $post->post_type, $settings['post_types'], true ) && 'pending' === $new_status && user_can( $post->post_author, 'edit_posts' ) && ! user_can( $post->post_author, 'publish_posts' ) ) {
 
@@ -489,7 +492,7 @@ class WPSite_Post_Status_Notifications {
 			$nnr_pending_notify = $settings['pending_notify'];
 
 			if ( 'both' === $nnr_pending_notify ) {
-				$users = get_users( array( 'role__in' => array( 'admin', 'editor' ) ) );
+				$users = get_users( array( 'role__in' => array( 'administrator', 'editor' ) ) );
 			} else {
 				$users = get_users( array( 'role' => $settings['pending_notify'] ) );
 			}
