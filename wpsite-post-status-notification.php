@@ -221,7 +221,13 @@ class WPSite_Post_Status_Notifications {
 
 			add_action( 'transition_post_status', array( $this, 'wpsite_send_email' ), 10, 3 );
 			add_action( 'admin_menu', array( $this, 'register_pages' ) );
-			
+
+			// Enqueue editor script.
+			add_action( 'enqueue_block_editor_assets', array( $this, 'wpsite_enqueue_editor_script' ) );
+
+			// Ajax to handle post save.
+			add_action( 'wp_ajax_wpsite_handle_post_save', array( $this, 'wpsite_handle_post_save' ) );
+
 		}
 	}
 
@@ -589,6 +595,67 @@ class WPSite_Post_Status_Notifications {
 			}
 		}
 	}
+
+	/**
+	 * Enqueue editor script.
+	 *
+	 * @return void
+	 */
+	public function wpsite_enqueue_editor_script() {
+
+		wp_enqueue_script( 'wpsite-gutenberg-hooks', WPSITE_POST_STATUS_NOTIFICATION_PLUGIN_URL . '/js/gutenberg-hooks.js', array( 'wp-edit-post' ), '1.0', true );
+		wp_script_add_data( 'wpsite-gutenberg-hooks', 'defer', true );
+
+		// create nonce.
+		$wpsite_post_status_notification_nonce = wp_create_nonce( 'wpsite_post_status_notification' );
+
+		wp_localize_script(
+			'wpsite-gutenberg-hooks',
+			'wpsite_gutenberg_hooks',
+			array(
+				'ajaxurl'  => admin_url( 'admin-ajax.php' ),
+				'wp_nonce' => $wpsite_post_status_notification_nonce,
+			)
+		);
+	}
+
+	/**
+	 * Send email on post status change
+	 *
+	 * @return void
+	 */
+	public function wpsite_handle_post_save() {
+
+		// Get nonce.
+		$wp_nonce = ! empty( $_POST['wp_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wp_nonce'] ) ) : '';
+
+		// Verify nonce.
+		if ( empty( $wp_nonce ) || ! wp_verify_nonce( $wp_nonce, 'wpsite_post_status_notification' ) ) {
+			wp_send_json_error( 'Invalid nonce.' );
+			wp_die();
+		}
+
+		// Get the post ID.
+		$post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : 0;
+
+		// Get the post.
+		$post = get_post( $post_id );
+
+		// Get the post status.
+		$post_status = isset( $_POST['post_status'] ) ? sanitize_text_field( wp_unslash( $_POST['post_status'] ) ) : '';
+
+		// Get the old post status.
+		$old_post_status = isset( $_POST['previous_status'] ) ? sanitize_text_field( wp_unslash( $_POST['previous_status'] ) ) : '';
+
+		// Send the email.
+		$this->wpsite_send_email( $post_status, $old_post_status, $post );
+
+		// Return a success message.
+		wp_send_json_success( 'Email sent successfully.' );
+		wp_die();
+	}
+
+
 
 	/**
 	 * Parse the tags added by people
