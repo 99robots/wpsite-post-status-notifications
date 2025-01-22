@@ -220,6 +220,7 @@ class WPSite_Post_Status_Notifications {
 			add_filter( "plugin_action_links_$plugin", array( $this, 'plugin_links' ) );
 
 			add_action( 'transition_post_status', array( $this, 'wpsite_send_email' ), 10, 3 );
+			
 			add_action( 'admin_menu', array( $this, 'register_pages' ) );
 
 			// Enqueue editor script.
@@ -298,6 +299,10 @@ class WPSite_Post_Status_Notifications {
 		wp_enqueue_style( 'wpsite_post_status_notifications_bootstrap_css', WPSITE_POST_STATUS_NOTIFICATION_PLUGIN_URL . '/css/nnr-bootstrap.min.css', array(), WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM );
 
 		wp_enqueue_script( 'wpsite_post_status_notifications_bootstrap_js', WPSITE_POST_STATUS_NOTIFICATION_PLUGIN_URL . '/js/bootstrap.min.js', array( 'jquery' ), WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM, true );
+		
+		// Enqueue main script.
+		wp_enqueue_script( 'wpsite_post_status_notifications_main_js', WPSITE_POST_STATUS_NOTIFICATION_PLUGIN_URL . '/js/post-status-notification.js', array( 'jquery' ), WPSITE_POST_STATUS_NOTIFICATION_VERSION_NUM, true );
+
 	}
 
 	/**
@@ -595,6 +600,7 @@ class WPSite_Post_Status_Notifications {
 			}
 		}
 	}
+
 
 	/**
 	 * Enqueue editor script.
