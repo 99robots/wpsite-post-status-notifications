@@ -224,7 +224,7 @@ class WPSite_Post_Status_Notifications {
 			add_action( 'admin_menu', array( $this, 'register_pages' ) );
 
 			// Enqueue editor script.
-			add_action( 'enqueue_block_editor_assets', array( $this, 'wpsite_enqueue_editor_script' ) );
+			//add_action( 'enqueue_block_editor_assets', array( $this, 'wpsite_enqueue_editor_script' ) );
 
 			// Ajax to handle post save.
 			add_action( 'wp_ajax_wpsite_handle_post_save', array( $this, 'wpsite_handle_post_save' ) );

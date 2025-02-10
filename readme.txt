@@ -62,7 +62,7 @@ Similar to all other plugins, follow these instructions:
 1. Sample Email by Post Status Notification Plugin
 
 == Changelog ==
-= 3.2.1 = 2025-01-22
+= 3.2.1 = 2025-02-10
 * Made compatible with WordPress 6.7.1
 
 = 3.2.0 = 2023-08-21
